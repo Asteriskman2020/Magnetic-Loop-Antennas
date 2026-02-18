@@ -906,6 +906,152 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
+       NVIS PATTERN DETAIL — ELEVATION DATA + COVERAGE
+       ═══════════════════════════════════════════════ -->
+  <div class="grid">
+
+    <!-- Normalised Elevation Pattern Table -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="white" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="white" stroke-width="2"/><line x1="9" y1="3" x2="9" y2="21" stroke="white" stroke-width="2"/></svg></span> Elevation Pattern Data (Broadside, PEC Ground)</h2>
+      <table class="perf-table">
+        <thead>
+          <tr>
+            <th>Elevation</th>
+            <th colspan="2">80 m (3.5 MHz, kh=0.37)</th>
+            <th colspan="2">40 m (7.0 MHz, kh=0.73)</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Normalised</th>
+            <th>dB</th>
+            <th>Normalised</th>
+            <th>dB</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>90&deg; (zenith)</td><td class="highlight-cell">1.000</td><td class="highlight-cell">0.0</td><td class="highlight-cell">1.000</td><td class="highlight-cell">0.0</td></tr>
+          <tr><td>80&deg;</td><td>0.985</td><td>&minus;0.1</td><td>0.989</td><td>&minus;0.1</td></tr>
+          <tr><td>70&deg;</td><td>0.941</td><td>&minus;0.5</td><td>0.951</td><td>&minus;0.4</td></tr>
+          <tr><td>60&deg;</td><td>0.870</td><td>&minus;1.2</td><td>0.888</td><td>&minus;1.0</td></tr>
+          <tr><td>50&deg;</td><td>0.774</td><td>&minus;2.2</td><td>0.794</td><td>&minus;2.0</td></tr>
+          <tr><td style="color:#E65100;font-weight:700">45&deg; (&minus;3 dB)</td><td style="color:#E65100;font-weight:700">0.716</td><td style="color:#E65100;font-weight:700">&minus;2.9</td><td style="color:#E65100;font-weight:700">0.742</td><td style="color:#E65100;font-weight:700">&minus;2.6</td></tr>
+          <tr><td>30&deg;</td><td>0.509</td><td>&minus;5.9</td><td>0.537</td><td>&minus;5.4</td></tr>
+          <tr><td>20&deg;</td><td>0.349</td><td>&minus;9.1</td><td>0.371</td><td>&minus;8.6</td></tr>
+          <tr><td>10&deg;</td><td>0.177</td><td>&minus;15.0</td><td>0.190</td><td>&minus;14.4</td></tr>
+          <tr><td>0&deg; (horizon)</td><td>0.000</td><td>null</td><td>0.000</td><td>null</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;font-size:0.78rem;color:#546E7A;line-height:1.5;">
+        <strong>AF(&alpha;) = 2|sin(kh&middot;sin&alpha;)|</strong> &mdash;
+        &minus;3 dB beamwidth covers <strong>45&deg;&ndash;90&deg;</strong> (NVIS cone).
+        Low-angle radiation suppressed &gt;15 dB below 10&deg;.
+      </div>
+    </div>
+
+    <!-- NVIS Coverage Radius -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2"/><path d="M12 3v9l6.36 3.64" fill="none" stroke="white" stroke-width="2"/></svg></span> NVIS Coverage vs Elevation (F2 @ 300 km)</h2>
+      <table class="perf-table">
+        <thead>
+          <tr>
+            <th>Elevation</th>
+            <th>Ground Radius</th>
+            <th>Round-Trip</th>
+            <th>Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>90&deg;</td><td>0 km</td><td>600 km</td><td style="font-family:Inter,sans-serif;font-weight:500;color:#546E7A">Directly overhead</td></tr>
+          <tr><td>80&deg;</td><td>53 km</td><td>606 km</td><td style="font-family:Inter,sans-serif;font-weight:500;color:#546E7A">Local (city-wide)</td></tr>
+          <tr><td>70&deg;</td><td>109 km</td><td>624 km</td><td style="font-family:Inter,sans-serif;font-weight:500;color:#546E7A">Regional</td></tr>
+          <tr><td>60&deg;</td><td>173 km</td><td>660 km</td><td style="font-family:Inter,sans-serif;font-weight:500;color:#546E7A">Inter-city</td></tr>
+          <tr><td>45&deg;</td><td>300 km</td><td>735 km</td><td style="font-family:Inter,sans-serif;font-weight:500;color:#546E7A">Extended regional</td></tr>
+          <tr><td>30&deg;</td><td>520 km</td><td>866 km</td><td style="font-family:Inter,sans-serif;font-weight:500;color:#546E7A">NVIS limit</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;font-size:0.78rem;color:#546E7A;line-height:1.5;">
+        <strong>R = H<sub>iono</sub> &times; tan(90&deg; &minus; &alpha;)</strong> &mdash;
+        The &minus;3 dB cone (45&deg;&ndash;90&deg;) provides strong coverage from <strong>0 to 300 km</strong>.
+        Signals &gt;500 km are suppressed by the pattern null at the horizon.
+      </div>
+
+      <!-- NVIS link budget summary -->
+      <div style="margin-top:14px;background:linear-gradient(135deg,#E8F5E9,#E0F2F1);border-radius:10px;padding:12px 16px;font-size:0.8rem;line-height:1.6;">
+        <strong style="color:#1B5E20;">Typical Link Budget (40 m, 100 W, 300 km)</strong><br>
+        <span style="color:#37474F;">EIRP +54 dBm &rarr; Path &minus;125 dB &rarr; Iono &minus;10 dB &rarr; Rx +4.8 dBi</span><br>
+        <span style="color:#37474F;">Received: <strong>&minus;76 dBm</strong> &bull; Noise floor: &minus;100 dBm &bull; <strong style="color:#00695C;">SNR = +24 dB</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       AZIMUTH PATTERN + MOUNTING DIAGRAM + HEIGHT OPTIMIZATION
+       ═══════════════════════════════════════════════ -->
+  <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+
+    <!-- Azimuth Pattern (horizontal plane) -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2"/><line x1="12" y1="3" x2="12" y2="21" stroke="white" stroke-width="1.5"/><line x1="3" y1="12" x2="21" y2="12" stroke="white" stroke-width="1.5"/></svg></span> Azimuth Pattern (Horizontal Plane)</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">Figure-8 &bull; cos(&phi;) &bull; Broadside E&ndash;W</div>
+        <svg id="azimuthPattern" viewBox="0 0 300 300" width="260" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">Nulls off loop ends &bull; Max broadside &bull; Orient N&ndash;S for E&ndash;W coverage</div>
+      </div>
+    </div>
+
+    <!-- NVIS Mounting Side-View Diagram -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V8l6-5 6 5v13" fill="none" stroke="white" stroke-width="2"/></svg></span> NVIS Mounting &mdash; Side View</h2>
+      <div class="diagram-container">
+        <svg id="nvisMounting" viewBox="0 0 320 340" width="280" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+
+    <!-- Height Optimization -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V10M9 20V6M13 20V10M17 20V4" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></span> Zenith Signal vs Height</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">Array Factor at Zenith &bull; AF(90&deg;) = 2|sin(kh)|</div>
+        <svg id="heightChart" viewBox="0 0 300 300" width="260" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">5 m = good compromise &bull; &lambda;/4 = optimum per band</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       NVIS KEY FORMULA + PHYSICS EXPLAINER
+       ═══════════════════════════════════════════════ -->
+  <div class="grid">
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><text x="4" y="18" font-size="16" fill="white" font-weight="bold">&sum;</text></svg></span> NVIS Array Factor &mdash; Key Formula</h2>
+      <div class="formula-box" style="font-size:0.9rem;line-height:2.2;">
+        E(&alpha;) = 2 |sin(k &middot; h &middot; sin(&alpha;))|<br>
+        <span style="font-size:0.78rem;color:#607D8B;">where &alpha; = elevation angle, k = 2&pi;/&lambda;, h = loop centre height</span><br><br>
+        Zenith signal: AF(90&deg;) = 2 |sin(kh)|<br>
+        Optimal height: h<sub>opt</sub> = &lambda;/4 &rarr; AF = 2.0 (maximum)<br>
+        At h = 5 m: AF(80m) = 0.72 &bull; AF(40m) = 1.34
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="white"/></svg></span> Why Vertical Loop = NVIS</h2>
+      <div style="font-size:0.88rem;color:#37474F;line-height:1.7;">
+        <p style="margin-bottom:10px;">A vertically-mounted small magnetic loop has its <strong>magnetic moment horizontal</strong>.
+        The free-space pattern is a torus (donut) around this axis. The <strong>zenith direction
+        is perpendicular to the magnetic moment</strong> &mdash; so the loop radiates at
+        <strong>full strength straight up</strong>. There is no zenith null.</p>
+        <p style="margin-bottom:10px;">When placed over ground at height h &lt; &lambda;/4:</p>
+        <ul style="padding-left:20px;margin-bottom:10px;">
+          <li>Direct + reflected waves <strong>add constructively</strong> at high elevation</li>
+          <li>At the horizon, they <strong>cancel</strong> (destructive interference)</li>
+          <li>Result: <strong>peak at zenith, null at horizon</strong> &mdash; pure NVIS</li>
+        </ul>
+        <p><strong style="color:#00695C;">This is the opposite of a horizontal dipole at low height,
+        which has a zenith null and radiates at low angles.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
        PERFORMANCE TABLE
        ═══════════════════════════════════════════════ -->
   <div class="section-label"><span>Detailed Performance Data</span></div>
@@ -1053,9 +1199,9 @@
        FOOTER
        ═══════════════════════════════════════════════ -->
   <div class="footer">
-    <strong>Magnetic Loop Antenna &mdash; 80 m &amp; 40 m Maximum Efficiency Design</strong><br>
-    Based on standard small-loop theory (Kraus, <em>Antennas</em>; Straw, <em>ARRL Antenna Book</em>).<br>
-    All values are theoretical &mdash; actual performance depends on construction quality and environment.<br><br>
+    <strong>NVIS Magnetic Loop Antenna &mdash; 80 m &amp; 40 m High-Angle Regional Coverage</strong><br>
+    Based on small-loop theory and ground-reflection array factor (Kraus, <em>Antennas</em>; Straw, <em>ARRL Antenna Book</em>).<br>
+    All values are theoretical &mdash; actual performance depends on construction quality, ground conductivity and environment.<br><br>
     <a href="https://github.com/Asteriskman2020/Magnetic-Loop-Antennas">github.com/Asteriskman2020/Magnetic-Loop-Antennas</a>
   </div>
 
@@ -1275,6 +1421,221 @@ document.addEventListener('DOMContentLoaded', function() {
     html += `<text x="48" y="33" font-family="Inter, sans-serif" font-size="8.5" fill="#00897B" font-weight="700">NVIS (5 m height)</text>`;
     html += `<line x1="22" y1="45" x2="42" y2="45" stroke="#E65100" stroke-width="2" stroke-dasharray="6,4"/>`;
     html += `<text x="48" y="48" font-family="Inter, sans-serif" font-size="8.5" fill="#E65100" font-weight="700">DX (free space)</text>`;
+
+    svg.innerHTML = html;
+  })();
+
+  // ── Azimuth Pattern (cos(phi) figure-8) ──
+  (function() {
+    const svg = document.getElementById('azimuthPattern');
+    if (!svg) return;
+    const cx = 150, cy = 150, R = 115;
+    let html = '';
+
+    // Grid circles (dB scale)
+    [{r:1.0,l:'0 dB'},{r:0.708,l:'-3'},{r:0.501,l:'-6'},{r:0.316,l:'-10'}].forEach(g => {
+      const gr = g.r * R;
+      html += `<circle cx="${cx}" cy="${cy}" r="${gr}" fill="none" stroke="rgba(0,77,64,0.1)" stroke-width="0.7" stroke-dasharray="${g.r<1?'3,4':'none'}"/>`;
+      if (g.r < 1) html += `<text x="${cx+gr+3}" y="${cy-3}" font-family="JetBrains Mono,monospace" font-size="7" fill="#B0BEC5">${g.l}</text>`;
+    });
+
+    // Cross-hairs + diagonal lines for 45° marks
+    html += `<line x1="${cx-R-12}" y1="${cy}" x2="${cx+R+12}" y2="${cy}" stroke="rgba(0,77,64,0.1)" stroke-width="0.5"/>`;
+    html += `<line x1="${cx}" y1="${cy-R-12}" x2="${cx}" y2="${cy+R+12}" stroke="rgba(0,77,64,0.1)" stroke-width="0.5"/>`;
+    [45,135,225,315].forEach(d => {
+      const a = d * Math.PI / 180;
+      html += `<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy-R*Math.sin(a)}" stroke="rgba(0,77,64,0.06)" stroke-width="0.5"/>`;
+    });
+
+    // Cardinal labels
+    const labels = [
+      {x:cx+R+14, y:cy+4, t:'E (Broadside)'},
+      {x:cx, y:cy-R-10, t:'N'},
+      {x:cx-R-14, y:cy+4, t:'W (Broadside)'},
+      {x:cx, y:cy+R+16, t:'S'}
+    ];
+    labels.forEach(l => html += `<text x="${l.x}" y="${l.y}" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#607D8B" font-weight="600">${l.t}</text>`);
+
+    // Loop orientation indicator (N-S line)
+    html += `<line x1="${cx}" y1="${cy-16}" x2="${cx}" y2="${cy+16}" stroke="#BF360C" stroke-width="3" stroke-linecap="round" opacity="0.5"/>`;
+    html += `<text x="${cx+12}" y="${cy+3}" font-family="Inter,sans-serif" font-size="7" fill="#BF360C" font-weight="700">LOOP</text>`;
+
+    // Figure-8 pattern: |cos(phi)|
+    let pts = [];
+    for (let d = 0; d <= 360; d++) {
+      const rad = d * Math.PI / 180;
+      const r = Math.abs(Math.cos(rad));
+      pts.push(`${(cx + R*r*Math.cos(rad)).toFixed(1)},${(cy - R*r*Math.sin(rad)).toFixed(1)}`);
+    }
+    html += `<polygon points="${pts.join(' ')}" fill="rgba(0,137,123,0.18)" stroke="none"/>`;
+    html += `<polygon points="${pts.join(' ')}" fill="none" stroke="#00897B" stroke-width="2.5" stroke-linejoin="round"/>`;
+    html += `<circle cx="${cx}" cy="${cy}" r="3" fill="#00897B"/>`;
+
+    // Null arrows
+    html += `<text x="${cx}" y="${cy-R-22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#E65100" font-weight="700">NULL</text>`;
+    html += `<text x="${cx}" y="${cy+R+26}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#E65100" font-weight="700">NULL</text>`;
+    html += `<text x="${cx+R+14}" y="${cy-10}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#00695C" font-weight="700">MAX</text>`;
+    html += `<text x="${cx-R-14}" y="${cy-10}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#00695C" font-weight="700">MAX</text>`;
+
+    svg.innerHTML = html;
+  })();
+
+  // ── NVIS Mounting Side-View Diagram ──
+  (function() {
+    const svg = document.getElementById('nvisMounting');
+    if (!svg) return;
+    let html = '';
+
+    // Sky background (subtle gradient)
+    html += `<rect x="0" y="0" width="320" height="240" fill="#F0F8FF" rx="0"/>`;
+
+    // Ground
+    html += `<rect x="0" y="240" width="320" height="100" fill="#8D6E63" opacity="0.15"/>`;
+    html += `<line x1="0" y1="240" x2="320" y2="240" stroke="#795548" stroke-width="2.5"/>`;
+    html += `<text x="295" y="255" font-family="Inter,sans-serif" font-size="9" fill="#795548" font-weight="700">GROUND</text>`;
+
+    // Ground screen (wire mesh pattern)
+    html += `<rect x="80" y="241" width="160" height="6" fill="#FFB300" opacity="0.3" rx="1"/>`;
+    for (let x = 85; x < 240; x += 10) {
+      html += `<line x1="${x}" y1="241" x2="${x}" y2="247" stroke="#FFB300" stroke-width="0.5" opacity="0.6"/>`;
+    }
+    html += `<text x="160" y="260" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#E65100" font-weight="600">GROUND SCREEN (4 m &times; 4 m)</text>`;
+
+    // Mast (fibreglass)
+    html += `<rect x="157" y="40" width="6" height="200" fill="#90A4AE" rx="2"/>`;
+    html += `<text x="144" y="228" text-anchor="end" font-family="Inter,sans-serif" font-size="7" fill="#607D8B" font-weight="600" transform="rotate(-90, 144, 228)">FIBREGLASS MAST</text>`;
+
+    // Cross-arm
+    html += `<line x1="100" y1="72" x2="220" y2="72" stroke="#78909C" stroke-width="3" stroke-linecap="round"/>`;
+
+    // Loop (vertical circle)
+    html += `<circle cx="160" cy="120" r="58" fill="none" stroke="#D84315" stroke-width="5" stroke-linecap="round"/>`;
+    html += `<circle cx="160" cy="120" r="58" fill="none" stroke="#FF8A65" stroke-width="2" opacity="0.4"/>`;
+
+    // Capacitor at top
+    html += `<rect x="148" y="58" width="24" height="12" rx="3" fill="#B0BEC5" stroke="#78909C" stroke-width="1"/>`;
+    html += `<text x="160" y="56" text-anchor="middle" font-family="Inter,sans-serif" font-size="6.5" fill="#37474F" font-weight="700">CAP</text>`;
+
+    // Coupling loop at bottom
+    html += `<ellipse cx="160" cy="178" rx="18" ry="10" fill="none" stroke="#00897B" stroke-width="2.5"/>`;
+
+    // Coax going down
+    html += `<line x1="160" y1="188" x2="160" y2="240" stroke="#37474F" stroke-width="2.5"/>`;
+    html += `<text x="175" y="218" font-family="Inter,sans-serif" font-size="6.5" fill="#37474F" font-weight="600">COAX</text>`;
+
+    // Dimension arrows - 5.0 m centre height
+    html += `<line x1="52" y1="120" x2="52" y2="240" stroke="#004D40" stroke-width="1"/>`;
+    html += `<line x1="48" y1="120" x2="56" y2="120" stroke="#004D40" stroke-width="1"/>`;
+    html += `<line x1="48" y1="240" x2="56" y2="240" stroke="#004D40" stroke-width="1"/>`;
+    html += `<rect x="28" y="170" width="48" height="22" rx="4" fill="white" stroke="#B2DFDB" stroke-width="0.5"/>`;
+    html += `<text x="52" y="178" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#004D40" font-weight="700">5.0 m</text>`;
+    html += `<text x="52" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="6" fill="#607D8B" font-weight="600">CENTRE</text>`;
+
+    // Dimension - 3.5 m bottom clearance
+    html += `<line x1="260" y1="178" x2="260" y2="240" stroke="#004D40" stroke-width="1"/>`;
+    html += `<line x1="256" y1="178" x2="264" y2="178" stroke="#004D40" stroke-width="1"/>`;
+    html += `<line x1="256" y1="240" x2="264" y2="240" stroke="#004D40" stroke-width="1"/>`;
+    html += `<rect x="240" y="202" width="40" height="22" rx="4" fill="white" stroke="#B2DFDB" stroke-width="0.5"/>`;
+    html += `<text x="260" y="210" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#004D40" font-weight="700">3.5 m</text>`;
+    html += `<text x="260" y="219" text-anchor="middle" font-family="Inter,sans-serif" font-size="5.5" fill="#607D8B" font-weight="600">CLEARANCE</text>`;
+
+    // Dimension - 3.0 m diameter
+    html += `<line x1="102" y1="120" x2="218" y2="120" stroke="#004D40" stroke-width="0.8" stroke-dasharray="3,3"/>`;
+    html += `<rect x="128" y="112" width="64" height="16" rx="4" fill="white" stroke="#B2DFDB" stroke-width="0.5"/>`;
+    html += `<text x="160" y="124" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#004D40" font-weight="700">D = 3.0 m</text>`;
+
+    // Radiation arrows going UP
+    const arrowColor = '#00897B';
+    [130,145,160,175,190].forEach((x, i) => {
+      const len = i === 2 ? 50 : (i === 1 || i === 3) ? 40 : 28;
+      html += `<line x1="${x}" y1="35" x2="${x}" y2="${35-len}" stroke="${arrowColor}" stroke-width="2" opacity="0.6"/>`;
+      html += `<polygon points="${x-4},${35-len+6} ${x},${35-len} ${x+4},${35-len+6}" fill="${arrowColor}" opacity="0.6"/>`;
+    });
+    html += `<text x="160" y="${35-55}" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#00695C" font-weight="800">NVIS RADIATION</text>`;
+    html += `<text x="160" y="${35-45}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#00897B" font-weight="600">Peak at Zenith (90&deg;)</text>`;
+
+    // Ionosphere reflection hint
+    html += `<path d="M 40 10 Q 160 -8 280 10" fill="none" stroke="#7986CB" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>`;
+    html += `<text x="275" y="8" font-family="Inter,sans-serif" font-size="6.5" fill="#7986CB" font-weight="600">IONOSPHERE (F2)</text>`;
+
+    // Ground reflection arrows (below ground, pointing up)
+    html += `<line x1="160" y1="270" x2="160" y2="248" stroke="#795548" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4"/>`;
+    html += `<text x="160" y="282" text-anchor="middle" font-family="Inter,sans-serif" font-size="6.5" fill="#795548" font-weight="600" opacity="0.7">GROUND REFLECTION</text>`;
+
+    svg.innerHTML = html;
+  })();
+
+  // ── Height Optimization Bar Chart ──
+  (function() {
+    const svg = document.getElementById('heightChart');
+    if (!svg) return;
+    let html = '';
+
+    const cx = 150, w = 260, h = 240;
+    const ox = 45, oy = 20; // origin offset
+    const chartW = w - 10, chartH = h - 20;
+
+    // Data: height -> zenith AF for 80m and 40m
+    const data = [
+      { h: 3,  af80: 0.436, af40: 0.852 },
+      { h: 5,  af80: 0.718, af40: 1.338 },
+      { h: 8,  af80: 1.110, af40: 1.814 },
+      { h: 10, af80: 1.338, af40: 1.961 },
+      { h: 15, af80: 1.814, af40: 1.377 },
+    ];
+    const maxAF = 2.0;
+    const barGroupW = chartW / data.length;
+    const barW = barGroupW * 0.32;
+
+    // Background
+    html += `<rect x="${ox}" y="${oy}" width="${chartW}" height="${chartH}" fill="#F5F9FC" rx="4"/>`;
+
+    // Grid lines
+    [0, 0.5, 1.0, 1.5, 2.0].forEach(v => {
+      const y = oy + chartH - (v / maxAF) * chartH;
+      html += `<line x1="${ox}" y1="${y}" x2="${ox+chartW}" y2="${y}" stroke="#E0E8EE" stroke-width="0.7"/>`;
+      html += `<text x="${ox-4}" y="${y+3}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="7" fill="#90A4AE">${v.toFixed(1)}</text>`;
+    });
+
+    // Axis labels
+    html += `<text x="${ox-8}" y="${oy + chartH/2}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" fill="#607D8B" font-weight="700" transform="rotate(-90, ${ox-30}, ${oy+chartH/2})">Zenith AF</text>`;
+    html += `<text x="${ox + chartW/2}" y="${oy + chartH + 35}" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#607D8B" font-weight="700">Loop Centre Height (m)</text>`;
+
+    // Optimal line at AF=2.0
+    const yMax = oy + chartH - (2.0 / maxAF) * chartH;
+    html += `<line x1="${ox}" y1="${yMax}" x2="${ox+chartW}" y2="${yMax}" stroke="#E65100" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>`;
+    html += `<text x="${ox+chartW+2}" y="${yMax+3}" font-family="Inter,sans-serif" font-size="6.5" fill="#E65100" font-weight="700">MAX</text>`;
+
+    // Bars
+    data.forEach((d, i) => {
+      const gx = ox + i * barGroupW + barGroupW * 0.12;
+      const h80 = (d.af80 / maxAF) * chartH;
+      const h40 = (d.af40 / maxAF) * chartH;
+
+      // 80m bar
+      html += `<rect x="${gx}" y="${oy + chartH - h80}" width="${barW}" height="${h80}" fill="#4DB6AC" rx="2"/>`;
+      html += `<text x="${gx + barW/2}" y="${oy + chartH - h80 - 3}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#00695C" font-weight="700">${d.af80.toFixed(2)}</text>`;
+
+      // 40m bar
+      html += `<rect x="${gx + barW + 3}" y="${oy + chartH - h40}" width="${barW}" height="${h40}" fill="#00695C" rx="2"/>`;
+      html += `<text x="${gx + barW + 3 + barW/2}" y="${oy + chartH - h40 - 3}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#004D40" font-weight="700">${d.af40.toFixed(2)}</text>`;
+
+      // Height label
+      html += `<text x="${gx + barW + 1}" y="${oy + chartH + 14}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#37474F" font-weight="700">${d.h} m</text>`;
+
+      // Highlight 5m bar
+      if (d.h === 5) {
+        html += `<rect x="${gx - 3}" y="${oy + chartH + 18}" width="${barGroupW * 0.76 + 6}" height="14" rx="4" fill="#00897B" opacity="0.12"/>`;
+        html += `<text x="${gx + barW + 1}" y="${oy + chartH + 28}" text-anchor="middle" font-family="Inter,sans-serif" font-size="6" fill="#00695C" font-weight="800">RECOMMENDED</text>`;
+      }
+    });
+
+    // Legend
+    html += `<rect x="${ox + chartW - 105}" y="${oy + 6}" width="100" height="30" rx="4" fill="white" fill-opacity="0.9" stroke="#B2DFDB" stroke-width="0.5"/>`;
+    html += `<rect x="${ox + chartW - 98}" y="${oy + 12}" width="12" height="8" rx="2" fill="#4DB6AC"/>`;
+    html += `<text x="${ox + chartW - 82}" y="${oy + 19}" font-family="Inter,sans-serif" font-size="7" fill="#37474F" font-weight="600">80 m (3.5 MHz)</text>`;
+    html += `<rect x="${ox + chartW - 98}" y="${oy + 24}" width="12" height="8" rx="2" fill="#00695C"/>`;
+    html += `<text x="${ox + chartW - 82}" y="${oy + 31}" font-family="Inter,sans-serif" font-size="7" fill="#37474F" font-weight="600">40 m (7.0 MHz)</text>`;
 
     svg.innerHTML = html;
   })();
