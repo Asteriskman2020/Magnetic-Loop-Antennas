@@ -5,345 +5,475 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magnetic Loop Antenna — 80m &amp; 40m Maximum Efficiency Design</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root {
+    --teal-50: #E0F7FA; --teal-100: #B2EBF2; --teal-200: #80DEEA;
+    --teal-300: #4DD0E1; --teal-400: #26C6DA; --teal-500: #00BCD4;
+    --teal-600: #00897B; --teal-700: #00695C; --teal-800: #004D40;
+    --teal-900: #002E27;
+    --mint-100: #B2DFDB; --mint-200: #80CBC4; --mint-300: #4DB6AC;
+    --green-50: #E8F5E9; --green-100: #C8E6C9;
+    --gold: #FFB300; --gold-light: #FFE082;
+    --copper: #E65100; --copper-light: #FF8A65;
+    --shadow-sm: 0 2px 8px rgba(0,77,64,0.08);
+    --shadow-md: 0 4px 24px rgba(0,77,64,0.12);
+    --shadow-lg: 0 8px 40px rgba(0,77,64,0.18);
+    --shadow-xl: 0 12px 56px rgba(0,77,64,0.25);
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(160deg, #E0F7FA 0%, #B2DFDB 35%, #80CBC4 70%, #B2DFDB 100%);
+    background: linear-gradient(160deg, #D4F5F0 0%, #B2ECD7 20%, #9DE0CE 40%, #B2DFDB 60%, #A8D8D0 80%, #C5E8E0 100%);
     min-height: 100vh;
-    padding: 40px;
+    padding: 36px;
     color: #1a1a2e;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── Animated Background Particles ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(3px 3px at 10% 20%, rgba(0,137,123,0.15) 50%, transparent 51%),
+      radial-gradient(4px 4px at 25% 60%, rgba(0,105,92,0.1) 50%, transparent 51%),
+      radial-gradient(3px 3px at 40% 15%, rgba(0,188,212,0.12) 50%, transparent 51%),
+      radial-gradient(5px 5px at 55% 75%, rgba(0,137,123,0.08) 50%, transparent 51%),
+      radial-gradient(3px 3px at 70% 35%, rgba(0,105,92,0.12) 50%, transparent 51%),
+      radial-gradient(4px 4px at 85% 80%, rgba(0,188,212,0.1) 50%, transparent 51%),
+      radial-gradient(3px 3px at 95% 10%, rgba(0,137,123,0.15) 50%, transparent 51%),
+      radial-gradient(2px 2px at 15% 85%, rgba(0,77,64,0.1) 50%, transparent 51%),
+      radial-gradient(3px 3px at 60% 45%, rgba(77,182,172,0.12) 50%, transparent 51%),
+      radial-gradient(2px 2px at 80% 55%, rgba(0,137,123,0.1) 50%, transparent 51%);
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 30s linear infinite;
+  }
+  @keyframes drift {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-20px, -15px); }
+    100% { transform: translate(0, 0); }
   }
 
   .poster {
-    max-width: 1200px;
+    max-width: 1260px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
   /* ── Header ── */
   .header {
-    background: linear-gradient(135deg, #004D40, #00695C, #00897B);
-    border-radius: 24px;
-    padding: 48px 56px;
+    background: linear-gradient(135deg, #002E27 0%, #004D40 30%, #00695C 60%, #00897B 100%);
+    border-radius: 28px;
+    padding: 52px 60px 48px;
     color: white;
     text-align: center;
-    margin-bottom: 32px;
-    box-shadow: 0 8px 32px rgba(0,77,64,0.35);
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255,255,255,0.1);
     position: relative;
     overflow: hidden;
   }
   .header::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
+    top: -80%;
+    left: -30%;
+    width: 160%;
     height: 200%;
-    background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 40% 40%, rgba(255,255,255,0.07) 0%, transparent 55%);
     pointer-events: none;
   }
-  .header h1 {
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1.1;
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  }
+  .header-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.7;
     margin-bottom: 12px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .header h1 {
+    font-size: 3.2rem;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1.08;
+    margin-bottom: 14px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .header h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #80DEEA, #B2EBF2, #80DEEA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .header .subtitle {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 300;
-    opacity: 0.92;
-    letter-spacing: 0.5px;
+    opacity: 0.88;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
   }
   .header .band-tags {
-    margin-top: 20px;
+    margin-top: 22px;
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
   }
   .band-tag {
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
     border-radius: 100px;
-    padding: 8px 28px;
-    font-size: 1rem;
+    padding: 10px 32px;
+    font-size: 0.95rem;
     font-weight: 600;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
+    letter-spacing: 0.5px;
   }
 
   /* ── Grid Layout ── */
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 28px;
+    gap: 24px;
+    margin-bottom: 24px;
   }
-  .grid.triple {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  .full-width {
-    grid-column: 1 / -1;
-  }
+  .grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .grid.quad { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .full-width { grid-column: 1 / -1; }
 
   /* ── Cards ── */
   .card {
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 4px 20px rgba(0,77,64,0.12);
-    border: 1px solid rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(16px);
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255,255,255,0.65);
+    transition: box-shadow 0.3s;
   }
+  .card:hover { box-shadow: var(--shadow-lg); }
   .card h2 {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 0.78rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #00695C;
+    letter-spacing: 2px;
+    color: var(--teal-600);
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #B2DFDB;
-  }
-
-  /* ── Specs List ── */
-  .spec-row {
+    border-bottom: 2px solid var(--mint-100);
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 8px 0;
-    border-bottom: 1px solid #E0F2F1;
+    align-items: center;
+    gap: 8px;
   }
-  .spec-row:last-child { border-bottom: none; }
-  .spec-label {
-    font-size: 0.92rem;
-    color: #546E7A;
-    font-weight: 400;
+  .card h2 .icon {
+    width: 20px; height: 20px;
+    background: var(--teal-600);
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
-  .spec-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1a1a2e;
-  }
+  .card h2 .icon svg { width: 12px; height: 12px; fill: white; }
 
-  /* ── Big Numbers ── */
+  /* ── Stat Cards ── */
+  .stat-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal-400), var(--teal-600));
+  }
   .big-stat {
     text-align: center;
-    padding: 20px 12px;
+    padding: 16px 8px 12px;
   }
   .big-stat .number {
-    font-size: 3.2rem;
+    font-size: 3rem;
     font-weight: 900;
     line-height: 1;
-    background: linear-gradient(135deg, #004D40, #00897B);
+    background: linear-gradient(135deg, var(--teal-800), var(--teal-600));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .big-stat .unit {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 300;
-    opacity: 0.7;
   }
   .big-stat .label {
-    font-size: 0.85rem;
-    color: #546E7A;
+    font-size: 0.75rem;
+    color: #607D8B;
     margin-top: 6px;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
   }
 
-  /* ── Efficiency Bars ── */
-  .eff-section { margin-bottom: 20px; }
+  /* ── Specs ── */
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(178,223,219,0.5);
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-label { font-size: 0.88rem; color: #607D8B; }
+  .spec-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  /* ── Efficiency Section ── */
+  .eff-section { margin-bottom: 18px; }
   .eff-section:last-child { margin-bottom: 0; }
   .eff-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
-  .eff-band {
-    font-weight: 700;
-    font-size: 1rem;
-    color: #1a1a2e;
-  }
+  .eff-band { font-weight: 700; font-size: 0.95rem; }
   .eff-pct {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: 1.3rem;
-    color: #00695C;
+    font-size: 1.4rem;
+    color: var(--teal-700);
   }
   .eff-bar-bg {
-    height: 28px;
-    background: #E0F2F1;
-    border-radius: 14px;
+    height: 32px;
+    background: linear-gradient(90deg, #E0F2F1, #F1F8F6);
+    border-radius: 16px;
     overflow: hidden;
-    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
   }
   .eff-bar-fill {
     height: 100%;
-    border-radius: 14px;
-    transition: width 1s ease;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   }
   .eff-bar-fill.band80 {
-    background: linear-gradient(90deg, #26A69A, #00897B);
+    background: linear-gradient(90deg, #4DB6AC, #00897B, #00695C);
     width: 30.5%;
   }
   .eff-bar-fill.band40 {
-    background: linear-gradient(90deg, #00897B, #004D40);
+    background: linear-gradient(90deg, #26A69A, #00897B, #004D40);
     width: 83.3%;
   }
   .eff-bar-fill.ref80 {
-    background: linear-gradient(90deg, #FFAB91, #FF7043);
-    width: 0.7%;
-    min-width: 4px;
+    background: linear-gradient(90deg, #FFCCBC, #FF7043);
+    width: 3%;
+    min-width: 20px;
+    font-size: 0;
   }
   .eff-bar-fill.ref40 {
-    background: linear-gradient(90deg, #FFAB91, #FF7043);
+    background: linear-gradient(90deg, #FFCCBC, #FF7043);
     width: 7.6%;
+    font-size: 0;
   }
   .eff-compare {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: #78909C;
     margin-top: 4px;
   }
-  .eff-compare span {
-    color: #00897B;
-    font-weight: 700;
-  }
+  .eff-compare span { color: var(--teal-600); font-weight: 700; }
 
-  /* ── SVG Diagram ── */
-  .diagram-container {
-    display: flex;
-    justify-content: center;
+  .improvement {
+    display: inline-flex;
     align-items: center;
-    padding: 10px 0;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--teal-800), var(--teal-700));
+    color: white;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 100px;
+    font-size: 0.88rem;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 2px 8px rgba(0,77,64,0.3);
   }
 
   /* ── Performance Table ── */
   .perf-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.88rem;
   }
   .perf-table thead th {
-    background: #00897B;
+    background: linear-gradient(180deg, var(--teal-600), var(--teal-700));
     color: white;
-    padding: 10px 12px;
+    padding: 12px 10px;
     text-align: center;
-    font-weight: 600;
-    font-size: 0.82rem;
+    font-weight: 700;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
   }
-  .perf-table thead th:first-child {
-    border-radius: 10px 0 0 0;
-    text-align: left;
-  }
-  .perf-table thead th:last-child {
-    border-radius: 0 10px 0 0;
-  }
+  .perf-table thead th:first-child { border-radius: 12px 0 0 0; text-align: left; padding-left: 16px; }
+  .perf-table thead th:last-child { border-radius: 0 12px 0 0; }
   .perf-table tbody td {
-    padding: 9px 12px;
+    padding: 10px 10px;
     text-align: center;
     border-bottom: 1px solid #E0F2F1;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
   .perf-table tbody td:first-child {
     text-align: left;
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    color: #00695C;
-  }
-  .perf-table tbody tr:nth-child(even) {
-    background: rgba(178,223,219,0.2);
-  }
-  .perf-table tbody tr:hover {
-    background: rgba(0,137,123,0.08);
-  }
-  .highlight-cell {
     font-weight: 700;
-    color: #004D40;
+    color: var(--teal-700);
+    padding-left: 16px;
+  }
+  .perf-table tbody tr:nth-child(even) { background: rgba(178,223,219,0.15); }
+  .perf-table tbody tr:last-child td:first-child { border-radius: 0 0 0 12px; }
+  .perf-table tbody tr:last-child td:last-child { border-radius: 0 0 12px 0; }
+  .highlight-cell { font-weight: 700; color: var(--teal-800); }
+
+  /* ── Radiation Pattern ── */
+  .pattern-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+  .pattern-wrap {
+    text-align: center;
+    flex: 1;
+  }
+  .pattern-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--teal-700);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .pattern-subtitle {
+    font-size: 0.7rem;
+    color: #90A4AE;
+    margin-top: 4px;
+    font-weight: 500;
   }
 
-  /* ── Improvement Badge ── */
-  .improvement {
-    display: inline-block;
-    background: linear-gradient(135deg, #004D40, #00695C);
-    color: white;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: 100px;
-    font-size: 0.85rem;
+  /* ── Diagram ── */
+  .diagram-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  /* ── Formula ── */
+  .formula-box {
+    background: linear-gradient(135deg, #E0F2F1, #E8F5E9);
+    border-radius: 14px;
+    padding: 18px 22px;
     font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--teal-800);
+    line-height: 2;
+    border: 1px solid rgba(0,137,123,0.15);
+  }
+
+  /* ── Warning ── */
+  .warning {
+    background: linear-gradient(135deg, #FFF8E1, #FFF3E0);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .warning-icon { font-size: 2rem; line-height: 1; }
+  .warning-text {
+    font-size: 0.88rem;
+    color: #BF360C;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  /* ── 3D Pattern Preview ── */
+  .pattern-3d-wrap {
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  /* ── Section Divider ── */
+  .section-label {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .section-label span {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--teal-700), var(--teal-600));
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 6px 28px;
+    border-radius: 100px;
+    box-shadow: var(--shadow-sm);
   }
 
   /* ── Footer ── */
   .footer {
     text-align: center;
-    padding: 24px;
-    font-size: 0.85rem;
-    color: #546E7A;
-    margin-top: 12px;
+    padding: 28px 20px;
+    font-size: 0.82rem;
+    color: #607D8B;
+    line-height: 1.7;
   }
-  .footer a {
-    color: #00695C;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .footer a:hover { text-decoration: underline; }
+  .footer a { color: var(--teal-700); font-weight: 700; text-decoration: none; }
+  .footer strong { color: #37474F; }
 
-  /* ── Formula Box ── */
-  .formula-box {
-    background: #E0F2F1;
-    border-radius: 12px;
-    padding: 16px 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: #004D40;
-    line-height: 1.8;
-    margin-top: 12px;
-  }
-
-  /* ── Warning Box ── */
-  .warning {
-    background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
-    border: 2px solid #FFB74D;
-    border-radius: 14px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .warning-icon {
-    font-size: 1.8rem;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-  .warning-text {
-    font-size: 0.9rem;
-    color: #E65100;
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  /* ── Print ── */
+  /* ── Print / PDF ── */
   @media print {
-    body { padding: 20px; background: white; }
-    .card { box-shadow: none; border: 1px solid #ddd; }
+    body {
+      padding: 20px;
+      background: linear-gradient(160deg, #E8F8F5, #D5F0EB, #C2E8E0) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #B2DFDB; }
+    @page { margin: 12mm; size: A3 portrait; }
   }
 
-  /* ── Responsive ── */
   @media (max-width: 900px) {
-    .grid, .grid.triple { grid-template-columns: 1fr; }
+    .grid, .grid.triple, .grid.quad { grid-template-columns: 1fr; }
     .header h1 { font-size: 2rem; }
-    body { padding: 16px; }
+    body { padding: 14px; }
+    .pattern-container { flex-direction: column; }
   }
 </style>
 </head>
@@ -351,31 +481,43 @@
 
 <div class="poster">
 
-  <!-- ═══════════ HEADER ═══════════ -->
+  <!-- ═══════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════ -->
   <div class="header">
-    <h1>Maximum-Efficiency Magnetic Loop</h1>
-    <div class="subtitle">3.0 m Diameter &bull; 7/8" Copper Tube &bull; Vacuum Capacitor &bull; 100 W</div>
+    <div class="header-eyebrow">Amateur Radio &bull; HF Antenna Engineering</div>
+    <h1>Maximum-Efficiency<br><em>Magnetic Loop Antenna</em></h1>
+    <div class="subtitle">3.0 m Diameter &bull; 7/8" Type L Copper Tube &bull; Vacuum Variable Capacitor &bull; 100 W PEP</div>
     <div class="band-tags">
-      <span class="band-tag">80 m &mdash; 3.5 MHz</span>
-      <span class="band-tag">40 m &mdash; 7.0 MHz</span>
+      <span class="band-tag">80 m &mdash; 3.500 &ndash; 3.800 MHz</span>
+      <span class="band-tag">40 m &mdash; 7.000 &ndash; 7.300 MHz</span>
+      <span class="band-tag">Gain: 1.76 dBi (theoretical)</span>
     </div>
   </div>
 
-  <!-- ═══════════ KEY STATS ═══════════ -->
-  <div class="grid triple">
-    <div class="card">
+  <!-- ═══════════════════════════════════════════════
+       KEY STATS ROW
+       ═══════════════════════════════════════════════ -->
+  <div class="grid quad">
+    <div class="card stat-card">
       <div class="big-stat">
         <div class="number">3.0<span class="unit"> m</span></div>
         <div class="label">Loop Diameter</div>
       </div>
     </div>
-    <div class="card">
+    <div class="card stat-card">
       <div class="big-stat">
         <div class="number">9.397<span class="unit"> &micro;H</span></div>
         <div class="label">Inductance</div>
       </div>
     </div>
-    <div class="card">
+    <div class="card stat-card">
+      <div class="big-stat">
+        <div class="number">83.3<span class="unit">%</span></div>
+        <div class="label">Peak Efficiency (40m)</div>
+      </div>
+    </div>
+    <div class="card stat-card">
       <div class="big-stat">
         <div class="number">100<span class="unit"> W</span></div>
         <div class="label">Max Power (PEP)</div>
@@ -383,366 +525,638 @@
     </div>
   </div>
 
-  <!-- ═══════════ MAIN CONTENT ═══════════ -->
+  <!-- ═══════════════════════════════════════════════
+       ANTENNA DIAGRAM + EFFICIENCY
+       ═══════════════════════════════════════════════ -->
   <div class="grid">
 
-    <!-- Left: Antenna Diagram -->
+    <!-- Antenna Geometry Diagram -->
     <div class="card">
-      <h2>Antenna Geometry</h2>
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2.5"/></svg></span> Antenna Geometry</h2>
       <div class="diagram-container">
-        <svg viewBox="0 0 400 480" width="360" xmlns="http://www.w3.org/2000/svg">
-          <!-- Background circle glow -->
+        <svg viewBox="0 0 420 500" width="380" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <radialGradient id="glow" cx="50%" cy="48%" r="42%">
-              <stop offset="0%" stop-color="#B2DFDB" stop-opacity="0.4"/>
+            <radialGradient id="glow" cx="50%" cy="45%" r="40%">
+              <stop offset="0%" stop-color="#B2DFDB" stop-opacity="0.5"/>
               <stop offset="100%" stop-color="#B2DFDB" stop-opacity="0"/>
             </radialGradient>
-            <linearGradient id="tubeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id="tubeGrad" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#BF360C"/>
-              <stop offset="30%" stop-color="#E65100"/>
+              <stop offset="25%" stop-color="#D84315"/>
               <stop offset="50%" stop-color="#FF8A65"/>
-              <stop offset="70%" stop-color="#E65100"/>
+              <stop offset="75%" stop-color="#D84315"/>
               <stop offset="100%" stop-color="#BF360C"/>
             </linearGradient>
-            <linearGradient id="capGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#78909C"/>
-              <stop offset="50%" stop-color="#CFD8DC"/>
+            <linearGradient id="tubeShine" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFAB91" stop-opacity="0.6"/>
+              <stop offset="50%" stop-color="#FF8A65" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="capGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#90A4AE"/>
+              <stop offset="30%" stop-color="#ECEFF1"/>
+              <stop offset="70%" stop-color="#CFD8DC"/>
               <stop offset="100%" stop-color="#78909C"/>
             </linearGradient>
-          </defs>
-
-          <circle cx="200" cy="220" r="160" fill="url(#glow)"/>
-
-          <!-- Main loop -->
-          <circle cx="200" cy="220" r="150" fill="none" stroke="url(#tubeGrad)"
-                  stroke-width="10" stroke-linecap="round"
-                  stroke-dasharray="920, 1000" stroke-dashoffset="-490"/>
-
-          <!-- Capacitor gap arcs (tube ends) -->
-          <path d="M 192 70.5 L 192 58" stroke="#BF360C" stroke-width="10" stroke-linecap="round" fill="none"/>
-          <path d="M 208 70.5 L 208 58" stroke="#BF360C" stroke-width="10" stroke-linecap="round" fill="none"/>
-
-          <!-- Capacitor symbol -->
-          <rect x="178" y="42" width="44" height="28" rx="6" fill="url(#capGrad)" stroke="#546E7A" stroke-width="1.5"/>
-          <line x1="186" y1="52" x2="186" y2="62" stroke="#37474F" stroke-width="2"/>
-          <line x1="192" y1="48" x2="192" y2="66" stroke="#37474F" stroke-width="2.5"/>
-          <line x1="208" y1="48" x2="208" y2="66" stroke="#37474F" stroke-width="2.5"/>
-          <line x1="214" y1="52" x2="214" y2="62" stroke="#37474F" stroke-width="2"/>
-
-          <!-- Capacitor label -->
-          <text x="200" y="34" text-anchor="middle" font-family="Inter, sans-serif"
-                font-size="11" fill="#004D40" font-weight="700">VACUUM CAP</text>
-          <text x="200" y="88" text-anchor="middle" font-family="JetBrains Mono, monospace"
-                font-size="10" fill="#546E7A">55 &ndash; 220 pF</text>
-
-          <!-- Coupling loop -->
-          <ellipse cx="200" cy="370" rx="48" ry="30" fill="none" stroke="#00897B"
-                   stroke-width="5" stroke-linecap="round"
-                   stroke-dasharray="230, 250" stroke-dashoffset="-230"/>
-
-          <!-- Faraday gap indicator -->
-          <circle cx="200" cy="340" r="3" fill="#00897B"/>
-
-          <!-- Coupling loop label -->
-          <text x="200" y="416" text-anchor="middle" font-family="Inter, sans-serif"
-                font-size="10" fill="#00695C" font-weight="600">COUPLING LOOP</text>
-          <text x="200" y="430" text-anchor="middle" font-family="JetBrains Mono, monospace"
-                font-size="10" fill="#78909C">0.60 m (Faraday)</text>
-
-          <!-- Coax feed -->
-          <line x1="200" y1="400" x2="200" y2="460" stroke="#37474F" stroke-width="3"/>
-          <line x1="194" y1="400" x2="194" y2="460" stroke="#78909C" stroke-width="1" stroke-dasharray="3,3"/>
-          <line x1="206" y1="400" x2="206" y2="460" stroke="#78909C" stroke-width="1" stroke-dasharray="3,3"/>
-          <text x="200" y="475" text-anchor="middle" font-family="Inter, sans-serif"
-                font-size="10" fill="#546E7A" font-weight="600">50 &Omega; COAX</text>
-
-          <!-- Diameter dimension -->
-          <line x1="50" y1="216" x2="50" y2="224" stroke="#004D40" stroke-width="1"/>
-          <line x1="350" y1="216" x2="350" y2="224" stroke="#004D40" stroke-width="1"/>
-          <line x1="50" y1="220" x2="140" y2="220" stroke="#004D40" stroke-width="1"
-                marker-end="url(#arrowR)"/>
-          <line x1="350" y1="220" x2="260" y2="220" stroke="#004D40" stroke-width="1"
-                marker-end="url(#arrowL)"/>
-          <defs>
-            <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <filter id="loopShadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#004D40" flood-opacity="0.15"/>
+            </filter>
+            <filter id="capShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.2"/>
+            </filter>
+            <marker id="arR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
               <polygon points="0,0 8,3 0,6" fill="#004D40"/>
             </marker>
-            <marker id="arrowL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+            <marker id="arL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
               <polygon points="8,0 0,3 8,6" fill="#004D40"/>
             </marker>
+            <!-- EM field wave hints -->
+            <radialGradient id="emField" cx="50%" cy="50%" r="50%">
+              <stop offset="60%" stop-color="#00BCD4" stop-opacity="0"/>
+              <stop offset="80%" stop-color="#00BCD4" stop-opacity="0.06"/>
+              <stop offset="100%" stop-color="#00BCD4" stop-opacity="0"/>
+            </radialGradient>
           </defs>
-          <rect x="158" y="208" width="84" height="22" rx="4" fill="white" fill-opacity="0.9"/>
-          <text x="200" y="224" text-anchor="middle" font-family="JetBrains Mono, monospace"
-                font-size="13" fill="#004D40" font-weight="700">D = 3.0 m</text>
+
+          <!-- EM field radiation hints -->
+          <circle cx="210" cy="220" r="200" fill="url(#emField)" opacity="0.6"/>
+          <circle cx="210" cy="220" r="230" fill="none" stroke="#00BCD4" stroke-width="0.5" stroke-dasharray="8,12" opacity="0.2"/>
+          <circle cx="210" cy="220" r="260" fill="none" stroke="#00BCD4" stroke-width="0.4" stroke-dasharray="6,14" opacity="0.12"/>
+
+          <!-- Background glow -->
+          <circle cx="210" cy="220" r="165" fill="url(#glow)"/>
+
+          <!-- Main loop shadow -->
+          <circle cx="212" cy="224" r="152" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="14" filter="url(#loopShadow)"/>
+
+          <!-- Main loop (copper tube) -->
+          <circle cx="210" cy="220" r="152" fill="none" stroke="url(#tubeGrad)"
+                  stroke-width="12" stroke-linecap="round"
+                  stroke-dasharray="932, 1000" stroke-dashoffset="-495"/>
+          <!-- Tube highlight -->
+          <circle cx="210" cy="220" r="148" fill="none" stroke="url(#tubeShine)"
+                  stroke-width="4" stroke-linecap="round"
+                  stroke-dasharray="932, 1000" stroke-dashoffset="-495" opacity="0.5"/>
+
+          <!-- Capacitor connections (tube ends) -->
+          <path d="M 201 68.5 L 201 50" stroke="#BF360C" stroke-width="11" stroke-linecap="round"/>
+          <path d="M 219 68.5 L 219 50" stroke="#BF360C" stroke-width="11" stroke-linecap="round"/>
+          <path d="M 201 50 L 201 46" stroke="#D84315" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 219 50 L 219 46" stroke="#D84315" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- Vacuum capacitor body -->
+          <rect x="188" y="24" width="44" height="36" rx="8" fill="url(#capGrad)" stroke="#78909C" stroke-width="1.5" filter="url(#capShadow)"/>
+          <!-- Cap internal plates -->
+          <rect x="197" y="30" width="3" height="24" rx="1" fill="#546E7A" opacity="0.7"/>
+          <rect x="203" y="30" width="3" height="24" rx="1" fill="#546E7A" opacity="0.5"/>
+          <rect x="215" y="30" width="3" height="24" rx="1" fill="#546E7A" opacity="0.5"/>
+          <rect x="221" y="30" width="3" height="24" rx="1" fill="#546E7A" opacity="0.7"/>
+          <!-- Motor drive shaft -->
+          <rect x="206" y="12" width="8" height="16" rx="3" fill="#90A4AE" stroke="#78909C" stroke-width="0.8"/>
+          <circle cx="210" cy="10" r="5" fill="#78909C" stroke="#546E7A" stroke-width="0.8"/>
+
+          <!-- Cap labels -->
+          <text x="210" y="8" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#004D40" font-weight="700" letter-spacing="1">MOTOR DRIVE</text>
+          <text x="210" y="76" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#004D40" font-weight="800" letter-spacing="0.5">VACUUM CAP</text>
+          <text x="210" y="90" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#607D8B" font-weight="600">55 &ndash; 220 pF / 15 kV</text>
+
+          <!-- Coupling loop -->
+          <ellipse cx="210" cy="372" rx="52" ry="32" fill="none" stroke="#00897B"
+                   stroke-width="6" stroke-linecap="round"
+                   stroke-dasharray="245, 270" stroke-dashoffset="-245"/>
+          <!-- Faraday shield gap -->
+          <rect x="206" y="338" width="8" height="6" rx="2" fill="white" stroke="#00897B" stroke-width="1"/>
+          <text x="232" y="345" font-family="Inter, sans-serif" font-size="8" fill="#00897B" font-weight="600">GAP</text>
+
+          <!-- Coupling labels -->
+          <text x="210" y="418" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#00695C" font-weight="700">FARADAY COUPLING LOOP</text>
+          <text x="210" y="432" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#78909C" font-weight="600">&empty; 0.60 m (D/5 ratio)</text>
+
+          <!-- Coax -->
+          <rect x="204" y="404" width="12" height="44" rx="3" fill="#37474F"/>
+          <rect x="207" y="404" width="6" height="44" rx="2" fill="#546E7A"/>
+          <circle cx="210" cy="404" r="7" fill="#37474F" stroke="#263238" stroke-width="1"/>
+          <text x="210" y="462" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#37474F" font-weight="700">50 &Omega; COAX</text>
+          <text x="210" y="474" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#78909C">RG-213 / LMR-400</text>
+
+          <!-- Diameter dimension -->
+          <line x1="57" y1="216" x2="57" y2="224" stroke="#004D40" stroke-width="1"/>
+          <line x1="363" y1="216" x2="363" y2="224" stroke="#004D40" stroke-width="1"/>
+          <line x1="57" y1="220" x2="148" y2="220" stroke="#004D40" stroke-width="1" marker-end="url(#arR)"/>
+          <line x1="363" y1="220" x2="272" y2="220" stroke="#004D40" stroke-width="1" marker-end="url(#arL)"/>
+          <rect x="163" y="208" width="94" height="24" rx="6" fill="white" fill-opacity="0.92" stroke="#B2DFDB" stroke-width="0.5"/>
+          <text x="210" y="225" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#004D40" font-weight="700">D = 3.0 m</text>
 
           <!-- Tube callout -->
-          <line x1="330" y1="150" x2="370" y2="120" stroke="#78909C" stroke-width="1"/>
-          <text x="372" y="116" font-family="Inter, sans-serif" font-size="10"
-                fill="#546E7A" font-weight="600">7/8" Cu Tube</text>
-          <text x="372" y="128" font-family="JetBrains Mono, monospace" font-size="9"
-                fill="#78909C">22.225 mm OD</text>
+          <line x1="342" y1="148" x2="380" y2="118" stroke="#90A4AE" stroke-width="1"/>
+          <circle cx="342" cy="148" r="2.5" fill="#90A4AE"/>
+          <rect x="375" y="104" width="110" height="36" rx="6" fill="white" fill-opacity="0.9" stroke="#B2DFDB" stroke-width="0.5"/>
+          <text x="382" y="118" font-family="Inter, sans-serif" font-size="10" fill="#37474F" font-weight="700">7/8" Cu Tube</text>
+          <text x="382" y="132" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909C" font-weight="500">22.225 mm OD</text>
+
+          <!-- Circumference callout -->
+          <line x1="80" y1="300" x2="50" y2="330" stroke="#90A4AE" stroke-width="1"/>
+          <circle cx="80" cy="300" r="2.5" fill="#90A4AE"/>
+          <rect x="-5" y="326" width="110" height="36" rx="6" fill="white" fill-opacity="0.9" stroke="#B2DFDB" stroke-width="0.5"/>
+          <text x="2" y="340" font-family="Inter, sans-serif" font-size="10" fill="#37474F" font-weight="700">Circumference</text>
+          <text x="2" y="354" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909C" font-weight="500">9.425 m (30.9 ft)</text>
+
+          <!-- Area label (center) -->
+          <text x="210" y="250" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#90A4AE" font-weight="500">A = 7.069 m&sup2;</text>
         </svg>
       </div>
     </div>
 
-    <!-- Right: Efficiency Comparison -->
+    <!-- Efficiency Comparison -->
     <div class="card">
-      <h2>Efficiency &mdash; This Design vs Standard</h2>
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z" fill="white"/></svg></span> Efficiency &mdash; This Design vs Standard</h2>
 
-      <div class="eff-section">
-        <div class="eff-header">
-          <span class="eff-band">80 m Band (3.5 MHz)</span>
-          <span class="eff-pct">30.5%</span>
+      <div style="margin-bottom: 24px;">
+        <div style="font-size:0.72rem;font-weight:700;color:#00897B;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">This Design (3.0 m / 7/8" tube)</div>
+
+        <div class="eff-section">
+          <div class="eff-header">
+            <span class="eff-band">80 m Band (3.5 MHz)</span>
+            <span class="eff-pct">30.5%</span>
+          </div>
+          <div class="eff-bar-bg">
+            <div class="eff-bar-fill band80">30.5%</div>
+          </div>
+          <div class="eff-compare">
+            vs Standard 1m loop: 0.7% &rarr; <span>+16.2 dB improvement</span>
+          </div>
         </div>
-        <div class="eff-bar-bg">
-          <div class="eff-bar-fill band80"></div>
-        </div>
-        <div class="eff-compare">
-          Standard 1 m / 3/8" loop: 0.7% &rarr; <span>+16.2 dB improvement</span>
+
+        <div style="height:14px"></div>
+
+        <div class="eff-section">
+          <div class="eff-header">
+            <span class="eff-band">40 m Band (7.0 MHz)</span>
+            <span class="eff-pct">83.3%</span>
+          </div>
+          <div class="eff-bar-bg">
+            <div class="eff-bar-fill band40">83.3%</div>
+          </div>
+          <div class="eff-compare">
+            vs Standard 1m loop: 7.6% &rarr; <span>+10.4 dB improvement</span>
+          </div>
         </div>
       </div>
 
-      <div style="height: 20px"></div>
+      <div style="margin-bottom: 24px;">
+        <div style="font-size:0.72rem;font-weight:700;color:#E65100;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">Standard Reference (1.0 m / 3/8" tube)</div>
 
-      <div class="eff-section">
-        <div class="eff-header">
-          <span class="eff-band">40 m Band (7.0 MHz)</span>
-          <span class="eff-pct">83.3%</span>
+        <div class="eff-section">
+          <div class="eff-header">
+            <span class="eff-band" style="color:#BF360C">80 m</span>
+            <span class="eff-pct" style="color:#E65100;font-size:1.1rem">0.7%</span>
+          </div>
+          <div class="eff-bar-bg">
+            <div class="eff-bar-fill ref80"></div>
+          </div>
         </div>
-        <div class="eff-bar-bg">
-          <div class="eff-bar-fill band40"></div>
-        </div>
-        <div class="eff-compare">
-          Standard 1 m / 3/8" loop: 7.6% &rarr; <span>+10.4 dB improvement</span>
+        <div style="height:8px"></div>
+        <div class="eff-section">
+          <div class="eff-header">
+            <span class="eff-band" style="color:#BF360C">40 m</span>
+            <span class="eff-pct" style="color:#E65100;font-size:1.1rem">7.6%</span>
+          </div>
+          <div class="eff-bar-bg">
+            <div class="eff-bar-fill ref40"></div>
+          </div>
         </div>
       </div>
 
-      <div style="height: 20px"></div>
-
-      <!-- Reference bars -->
-      <h2 style="margin-top: 8px">Standard Design (Reference)</h2>
-      <div class="eff-section">
-        <div class="eff-header">
-          <span class="eff-band" style="color:#E65100">80 m &mdash; 1 m / 3/8" tube</span>
-          <span class="eff-pct" style="color:#E65100">0.7%</span>
-        </div>
-        <div class="eff-bar-bg">
-          <div class="eff-bar-fill ref80"></div>
-        </div>
-      </div>
-      <div style="height: 10px"></div>
-      <div class="eff-section">
-        <div class="eff-header">
-          <span class="eff-band" style="color:#E65100">40 m &mdash; 1 m / 3/8" tube</span>
-          <span class="eff-pct" style="color:#E65100">7.6%</span>
-        </div>
-        <div class="eff-bar-bg">
-          <div class="eff-bar-fill ref40"></div>
-        </div>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <div class="improvement">&#9650; 80 m: +16.2 dB</div>
+        <div class="improvement">&#9650; 40 m: +10.4 dB</div>
       </div>
 
-      <div style="height: 24px"></div>
-      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-        <div class="improvement">80 m: +16.2 dB</div>
-        <div class="improvement">40 m: +10.4 dB</div>
+      <div style="margin-top:20px;background:linear-gradient(135deg,#E8F5E9,#E0F2F1);border-radius:12px;padding:14px 18px;font-size:0.82rem;color:#2E7D32;line-height:1.6;">
+        <strong style="color:#1B5E20">Why so much better?</strong><br>
+        Radiation resistance scales as D<sup>4</sup>. A 3&times; larger diameter yields
+        81&times; more R<sub>rad</sub>, while conductor loss only increases 1.3&times;.
+        Thicker tube cuts loss a further 2.3&times;.
       </div>
     </div>
   </div>
 
-  <!-- ═══════════ PERFORMANCE TABLE ═══════════ -->
+  <!-- ═══════════════════════════════════════════════
+       RADIATION PATTERNS
+       ═══════════════════════════════════════════════ -->
+  <div class="section-label"><span>Radiation Pattern Analysis</span></div>
+
+  <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+
+    <!-- Azimuth Pattern (H-plane) -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2"/></svg></span> Azimuth Pattern</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">H-Plane (Top View)</div>
+        <svg id="azimuthPattern" viewBox="0 0 300 300" width="260" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">Figure-8 &bull; Max broadside to loop &bull; Nulls edge-on</div>
+      </div>
+    </div>
+
+    <!-- Elevation Pattern (E-plane) -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z" fill="none" stroke="white" stroke-width="2"/></svg></span> Elevation Pattern</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">E-Plane (Side View)</div>
+        <svg id="elevationPattern" viewBox="0 0 300 300" width="260" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">Max at horizon &bull; Null at zenith &bull; Bidirectional</div>
+      </div>
+    </div>
+
+    <!-- 3D Pattern Visualization -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" fill="none" stroke="white" stroke-width="2"/></svg></span> 3D Radiation Pattern</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">Toroidal (Donut) Shape</div>
+        <svg id="pattern3D" viewBox="0 0 300 300" width="260" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">Vertically polarised &bull; Directivity: 1.76 dBi</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       PERFORMANCE TABLE
+       ═══════════════════════════════════════════════ -->
+  <div class="section-label"><span>Detailed Performance Data</span></div>
+
   <div class="grid">
     <div class="card full-width">
-      <h2>Detailed Performance Table</h2>
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="white" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="white" stroke-width="2"/><line x1="9" y1="3" x2="9" y2="21" stroke="white" stroke-width="2"/></svg></span> Complete Performance Table</h2>
       <table class="perf-table">
         <thead>
           <tr>
             <th>Band</th>
             <th>Freq (MHz)</th>
-            <th>C_tune (pF)</th>
+            <th>C<sub>tune</sub> (pF)</th>
             <th>Circ / &lambda;</th>
+            <th>R<sub>rad</sub> (&Omega;)</th>
+            <th>R<sub>loss</sub> (&Omega;)</th>
             <th>Efficiency</th>
-            <th>Eff (dB)</th>
+            <th>&eta; (dB)</th>
             <th>&minus;3 dB BW</th>
             <th>Q</th>
-            <th>V_cap @100W</th>
+            <th>V<sub>cap</sub> @100W</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>80 m</td>
-            <td>3.500</td>
-            <td>220.0</td>
-            <td>0.110</td>
-            <td class="highlight-cell">30.5 %</td>
-            <td>&minus;5.16</td>
-            <td>1.61 kHz</td>
-            <td>2 176</td>
-            <td>6 712 V</td>
+            <td>80 m</td><td>3.500</td><td>220.0</td><td>0.110</td>
+            <td>0.0289</td><td>0.0659</td>
+            <td class="highlight-cell">30.5 %</td><td>&minus;5.16</td>
+            <td>1.61 kHz</td><td>2 176</td><td>6 712 V</td>
           </tr>
           <tr>
-            <td>80 m</td>
-            <td>3.650</td>
-            <td>202.3</td>
-            <td>0.115</td>
-            <td class="highlight-cell">33.7 %</td>
-            <td>&minus;4.72</td>
-            <td>1.76 kHz</td>
-            <td>2 068</td>
-            <td>6 762 V</td>
+            <td>80 m</td><td>3.650</td><td>202.3</td><td>0.115</td>
+            <td>0.0342</td><td>0.0673</td>
+            <td class="highlight-cell">33.7 %</td><td>&minus;4.72</td>
+            <td>1.76 kHz</td><td>2 068</td><td>6 762 V</td>
           </tr>
           <tr>
-            <td>80 m</td>
-            <td>3.800</td>
-            <td>186.6</td>
-            <td>0.119</td>
-            <td class="highlight-cell">36.9 %</td>
-            <td>&minus;4.33</td>
-            <td>1.94 kHz</td>
-            <td>1 963</td>
-            <td>6 799 V</td>
+            <td>80 m</td><td>3.800</td><td>186.6</td><td>0.119</td>
+            <td>0.0402</td><td>0.0687</td>
+            <td class="highlight-cell">36.9 %</td><td>&minus;4.33</td>
+            <td>1.94 kHz</td><td>1 963</td><td>6 799 V</td>
           </tr>
           <tr>
-            <td>40 m</td>
-            <td>7.000</td>
-            <td>55.0</td>
-            <td>0.220</td>
-            <td class="highlight-cell">83.3 %</td>
-            <td>&minus;0.79</td>
-            <td>9.42 kHz</td>
-            <td>743</td>
-            <td>5 544 V</td>
+            <td>40 m</td><td>7.000</td><td>55.0</td><td>0.220</td>
+            <td>0.4631</td><td>0.0932</td>
+            <td class="highlight-cell">83.3 %</td><td>&minus;0.79</td>
+            <td>9.42 kHz</td><td>743</td><td>5 544 V</td>
           </tr>
           <tr>
-            <td>40 m</td>
-            <td>7.100</td>
-            <td>53.5</td>
-            <td>0.223</td>
-            <td class="highlight-cell">83.9 %</td>
-            <td>&minus;0.76</td>
-            <td>9.73 kHz</td>
-            <td>730</td>
-            <td>5 483 V</td>
+            <td>40 m</td><td>7.100</td><td>53.5</td><td>0.223</td>
+            <td>0.4903</td><td>0.0939</td>
+            <td class="highlight-cell">83.9 %</td><td>&minus;0.76</td>
+            <td>9.73 kHz</td><td>730</td><td>5 483 V</td>
           </tr>
           <tr>
-            <td>40 m</td>
-            <td>7.200</td>
-            <td>52.0</td>
-            <td>0.226</td>
-            <td class="highlight-cell">84.6 %</td>
-            <td>&minus;0.72</td>
-            <td>10.39 kHz</td>
-            <td>693</td>
-            <td>5 427 V</td>
+            <td>40 m</td><td>7.200</td><td>52.0</td><td>0.226</td>
+            <td>0.5185</td><td>0.0945</td>
+            <td class="highlight-cell">84.6 %</td><td>&minus;0.72</td>
+            <td>10.39 kHz</td><td>693</td><td>5 427 V</td>
           </tr>
           <tr>
-            <td>40 m</td>
-            <td>7.300</td>
-            <td>50.6</td>
-            <td>0.230</td>
-            <td class="highlight-cell">85.2 %</td>
-            <td>&minus;0.70</td>
-            <td>10.78 kHz</td>
-            <td>677</td>
-            <td>5 375 V</td>
+            <td>40 m</td><td>7.300</td><td>50.6</td><td>0.230</td>
+            <td>0.5478</td><td>0.0952</td>
+            <td class="highlight-cell">85.2 %</td><td>&minus;0.70</td>
+            <td>10.78 kHz</td><td>677</td><td>5 375 V</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- ═══════════ SPECS + FORMULAS ═══════════ -->
-  <div class="grid">
+  <!-- ═══════════════════════════════════════════════
+       SPECS + FORMULAS + MATERIALS
+       ═══════════════════════════════════════════════ -->
+  <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+
+    <!-- Specifications -->
     <div class="card">
-      <h2>Design Specifications</h2>
-      <div class="spec-row">
-        <span class="spec-label">Loop Diameter</span>
-        <span class="spec-value">3.000 m</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Loop Circumference</span>
-        <span class="spec-value">9.425 m</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Loop Area</span>
-        <span class="spec-value">7.069 m&sup2;</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Tube OD (Type L)</span>
-        <span class="spec-value">22.225 mm (7/8")</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Inductance</span>
-        <span class="spec-value">9.397 &micro;H</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Capacitor Range</span>
-        <span class="spec-value">50.6 &ndash; 220 pF</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Capacitor Type</span>
-        <span class="spec-value">Vacuum Var.</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Voltage Rating</span>
-        <span class="spec-value">&ge; 15 kV</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Coupling Loop</span>
-        <span class="spec-value">0.60 m Faraday</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Feed Impedance</span>
-        <span class="spec-value">50 &Omega;</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Estimated Weight</span>
-        <span class="spec-value">~12 kg (copper)</span>
-      </div>
-      <div class="spec-row">
-        <span class="spec-label">Est. Cost</span>
-        <span class="spec-value">$455 &ndash; $900</span>
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 15l-2-2h4l-2 2zm0-6l2 2h-4l2-2z" fill="white"/><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2"/></svg></span> Design Specs</h2>
+      <div class="spec-row"><span class="spec-label">Loop Diameter</span><span class="spec-value">3.000 m</span></div>
+      <div class="spec-row"><span class="spec-label">Circumference</span><span class="spec-value">9.425 m</span></div>
+      <div class="spec-row"><span class="spec-label">Area</span><span class="spec-value">7.069 m&sup2;</span></div>
+      <div class="spec-row"><span class="spec-label">Tube OD</span><span class="spec-value">22.225 mm</span></div>
+      <div class="spec-row"><span class="spec-label">Inductance</span><span class="spec-value">9.397 &micro;H</span></div>
+      <div class="spec-row"><span class="spec-label">Cap Range</span><span class="spec-value">50 &ndash; 220 pF</span></div>
+      <div class="spec-row"><span class="spec-label">Cap Type</span><span class="spec-value">Vacuum Var.</span></div>
+      <div class="spec-row"><span class="spec-label">Voltage</span><span class="spec-value">&ge; 15 kV</span></div>
+      <div class="spec-row"><span class="spec-label">Coupling</span><span class="spec-value">0.60 m Faraday</span></div>
+      <div class="spec-row"><span class="spec-label">Feed Z</span><span class="spec-value">50 &Omega;</span></div>
+      <div class="spec-row"><span class="spec-label">Weight</span><span class="spec-value">~12 kg</span></div>
+      <div class="spec-row"><span class="spec-label">Cost</span><span class="spec-value">$455 &ndash; $900</span></div>
+    </div>
+
+    <!-- Formulae -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><text x="4" y="18" font-size="16" fill="white" font-weight="bold">&sum;</text></svg></span> Engineering Formulae</h2>
+      <div class="formula-box">
+        L = &mu;&#8320; &middot; b &middot; [ln(8b/a) &minus; 2]<br><br>
+        C = 1 / (&omega;&sup2; &middot; L)<br><br>
+        R<sub>r</sub> = 320&pi;<sup>4</sup>(A / &lambda;&sup2;)&sup2;<br><br>
+        &delta; = 1 / &radic;(&pi; f &mu;&#8320; &sigma;)<br><br>
+        R<sub>loss</sub> = C<sub>loop</sub> / (&pi; d &sigma; &delta;)<br><br>
+        &eta; = R<sub>r</sub> / (R<sub>r</sub> + R<sub>loss</sub>)<br><br>
+        Q = &omega;L / (R<sub>r</sub> + R<sub>loss</sub>)<br><br>
+        V<sub>cap</sub> = &radic;(P/R<sub>tot</sub>) &middot; &omega;L
       </div>
     </div>
 
+    <!-- Materials -->
     <div class="card">
-      <h2>Key Engineering Formulae</h2>
-      <div class="formula-box">
-        L = &mu;&#8320; &times; b &times; [ln(8b/a) &minus; 2]<br><br>
-        C = 1 / (&omega;&sup2; &times; L)<br><br>
-        R<sub>r</sub> = 31171 &times; (A / &lambda;&sup2;)&sup2;<br><br>
-        &delta; = 1 / &radic;(&pi; f &mu;&#8320; &sigma;)<br><br>
-        R<sub>loss</sub> = C<sub>loop</sub> / (&pi; d<sub>tube</sub> &sigma; &delta;)<br><br>
-        &eta; = R<sub>r</sub> / (R<sub>r</sub> + R<sub>loss</sub>)<br><br>
-        Q = &omega;L / (R<sub>r</sub> + R<sub>loss</sub>)<br><br>
-        V<sub>cap</sub> = &radic;(P / R<sub>total</sub>) &times; &omega;L
-      </div>
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" fill="none" stroke="white" stroke-width="2"/></svg></span> Materials &amp; BOM</h2>
+      <div class="spec-row"><span class="spec-label">Radiator</span><span class="spec-value">7/8" Cu Type L</span></div>
+      <div class="spec-row"><span class="spec-label">Cu Tube Length</span><span class="spec-value">12 m</span></div>
+      <div class="spec-row"><span class="spec-label">Conductivity</span><span class="spec-value">5.8&times;10<sup>7</sup> S/m</span></div>
+      <div class="spec-row"><span class="spec-label">Skin Depth (3.5)</span><span class="spec-value">35.3 &micro;m</span></div>
+      <div class="spec-row"><span class="spec-label">Skin Depth (7.0)</span><span class="spec-value">25.0 &micro;m</span></div>
+      <div class="spec-row"><span class="spec-label">Joints</span><span class="spec-value">Silver Solder</span></div>
+      <div class="spec-row"><span class="spec-label">Mast</span><span class="spec-value">Fibreglass 4 m</span></div>
+      <div class="spec-row"><span class="spec-label">Coax Feed</span><span class="spec-value">RG-213 / LMR-400</span></div>
+      <div class="spec-row"><span class="spec-label">Connector</span><span class="spec-value">N-type / SO-239</span></div>
+      <div class="spec-row"><span class="spec-label">Capacitor</span><span class="spec-value">Jennings CSVF</span></div>
+      <div class="spec-row"><span class="spec-label">Motor</span><span class="spec-value">12V DC Gear</span></div>
+      <div class="spec-row"><span class="spec-label">Est. Total</span><span class="spec-value" style="color:var(--teal-700)">$455 &ndash; $900</span></div>
     </div>
   </div>
 
-  <!-- ═══════════ WARNING ═══════════ -->
+  <!-- ═══════════════════════════════════════════════
+       WARNING
+       ═══════════════════════════════════════════════ -->
   <div class="grid">
-    <div class="card full-width">
+    <div class="card full-width" style="padding:0;overflow:hidden;">
       <div class="warning">
         <div class="warning-icon">&#9889;</div>
         <div class="warning-text">
           <strong>HIGH VOLTAGE WARNING:</strong> At 100 W, capacitor voltages exceed
           <strong>6 700 V</strong> on 80 m and <strong>5 500 V</strong> on 40 m.
-          Mount the antenna out of reach (&ge; 2.5 m above ground). Use motor-driven
-          tuning only. Never touch the loop or capacitor during transmission. These
-          voltages are lethal.
+          Mount the antenna &ge; 2.5 m above ground. Use motor-driven tuning only.
+          <strong>Never touch the loop or capacitor during transmission.</strong> These voltages are lethal.
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════ FOOTER ═══════════ -->
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════ -->
   <div class="footer">
     <strong>Magnetic Loop Antenna &mdash; 80 m &amp; 40 m Maximum Efficiency Design</strong><br>
-    Based on standard small-loop antenna theory (Kraus; ARRL Antenna Book).<br>
+    Based on standard small-loop theory (Kraus, <em>Antennas</em>; Straw, <em>ARRL Antenna Book</em>).<br>
     All values are theoretical &mdash; actual performance depends on construction quality and environment.<br><br>
     <a href="https://github.com/Asteriskman2020/Magnetic-Loop-Antennas">github.com/Asteriskman2020/Magnetic-Loop-Antennas</a>
   </div>
 
 </div>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT: Generate Radiation Pattern SVGs
+     ═══════════════════════════════════════════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ── Utility: generate SVG polar pattern ──
+  function polarPattern(svgId, patternFn, opts) {
+    const svg = document.getElementById(svgId);
+    if (!svg) return;
+    const cx = 150, cy = 150, R = 120;
+    const { fill, stroke, label, cardinals, gridColor } = Object.assign({
+      fill: 'rgba(0,137,123,0.15)',
+      stroke: '#00897B',
+      label: '',
+      cardinals: ['0°','90°','180°','270°'],
+      gridColor: 'rgba(0,77,64,0.12)'
+    }, opts);
+
+    let html = '';
+
+    // Grid circles (dB scale markers: 0, -3, -6, -10 dB → linear: 1.0, 0.708, 0.501, 0.316)
+    const gridLevels = [
+      { r: 1.0,   label: '0 dB' },
+      { r: 0.708, label: '-3' },
+      { r: 0.501, label: '-6' },
+      { r: 0.316, label: '-10' }
+    ];
+    gridLevels.forEach(g => {
+      const gr = g.r * R;
+      html += `<circle cx="${cx}" cy="${cy}" r="${gr}" fill="none" stroke="${gridColor}" stroke-width="0.7" stroke-dasharray="${g.r < 1 ? '3,4' : 'none'}"/>`;
+      if (g.r < 1) {
+        html += `<text x="${cx + gr + 3}" y="${cy - 3}" font-family="JetBrains Mono, monospace" font-size="8" fill="#90A4AE">${g.label}</text>`;
+      }
+    });
+
+    // Cross-hairs
+    html += `<line x1="${cx-R-15}" y1="${cy}" x2="${cx+R+15}" y2="${cy}" stroke="${gridColor}" stroke-width="0.5"/>`;
+    html += `<line x1="${cx}" y1="${cy-R-15}" x2="${cx}" y2="${cy+R+15}" stroke="${gridColor}" stroke-width="0.5"/>`;
+
+    // Cardinal labels
+    const cardPos = [
+      [cx + R + 8, cy + 4],     // 0° (right)
+      [cx - 4, cy - R - 8],     // 90° (top)
+      [cx - R - 28, cy + 4],    // 180° (left)
+      [cx - 4, cy + R + 16]     // 270° (bottom)
+    ];
+    cardinals.forEach((c, i) => {
+      html += `<text x="${cardPos[i][0]}" y="${cardPos[i][1]}" font-family="Inter, sans-serif" font-size="9" fill="#607D8B" font-weight="600" text-anchor="middle">${c}</text>`;
+    });
+
+    // Pattern path (360 points)
+    let points = [];
+    for (let deg = 0; deg <= 360; deg++) {
+      const rad = deg * Math.PI / 180;
+      const r = Math.abs(patternFn(rad));
+      const x = cx + R * r * Math.cos(rad);
+      const y = cy - R * r * Math.sin(rad);
+      points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+    }
+
+    // Filled area
+    html += `<polygon points="${points.join(' ')}" fill="${fill}" stroke="none"/>`;
+    // Outline
+    html += `<polygon points="${points.join(' ')}" fill="none" stroke="${stroke}" stroke-width="2.5" stroke-linejoin="round"/>`;
+
+    // Centre dot
+    html += `<circle cx="${cx}" cy="${cy}" r="3" fill="${stroke}"/>`;
+
+    // Main lobe label
+    if (label) {
+      html += `<text x="${cx}" y="${cy + R + 32}" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#546E7A" font-weight="600">${label}</text>`;
+    }
+
+    svg.innerHTML = html;
+  }
+
+  // ── Azimuth (H-plane): cos(phi) figure-8, lobes left-right ──
+  polarPattern('azimuthPattern', function(phi) {
+    return Math.cos(phi);  // figure-8: max at 0° and 180°
+  }, {
+    fill: 'rgba(0,137,123,0.18)',
+    stroke: '#00897B',
+    cardinals: ['Broadside', '', 'Broadside', ''],
+    label: 'Pattern: |cos(\u03C6)| — Nulls in loop plane'
+  });
+
+  // Add "Loop plane" labels for azimuth
+  (function() {
+    const svg = document.getElementById('azimuthPattern');
+    if (!svg) return;
+    // Loop plane arrows (up and down = edge-on = nulls)
+    svg.innerHTML +=
+      `<text x="150" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#E65100" font-weight="700">NULL</text>` +
+      `<text x="150" y="292" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#E65100" font-weight="700">NULL</text>` +
+      `<line x1="150" y1="26" x2="150" y2="28" stroke="#E65100" stroke-width="1.5"/>` +
+      `<line x1="150" y1="275" x2="150" y2="277" stroke="#E65100" stroke-width="1.5"/>` +
+      // Loop plane indicator
+      `<line x1="150" y1="34" x2="150" y2="266" stroke="#E65100" stroke-width="0.8" stroke-dasharray="4,6" opacity="0.4"/>`;
+  })();
+
+  // ── Elevation (E-plane): sin(theta), lobes at horizon ──
+  polarPattern('elevationPattern', function(theta) {
+    return Math.sin(theta);  // max at horizon (90°/270°), null at zenith (0°/180°)
+  }, {
+    fill: 'rgba(0,105,92,0.18)',
+    stroke: '#00695C',
+    cardinals: ['Horizon', 'Zenith', 'Horizon', 'Nadir'],
+    label: 'Pattern: |sin(\u03B8)| — Null at zenith'
+  });
+
+  // Add zenith null labels
+  (function() {
+    const svg = document.getElementById('elevationPattern');
+    if (!svg) return;
+    svg.innerHTML +=
+      `<text x="150" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#E65100" font-weight="700">NULL</text>` +
+      `<text x="150" y="292" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#E65100" font-weight="700">NULL</text>` +
+      // Ground line
+      `<line x1="20" y1="150" x2="280" y2="150" stroke="#795548" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.3"/>` +
+      `<text x="280" y="145" font-family="Inter, sans-serif" font-size="7.5" fill="#795548" font-weight="500" opacity="0.6">GND</text>`;
+  })();
+
+  // ── 3D Toroidal Pattern (Perspective projection of donut) ──
+  (function() {
+    const svg = document.getElementById('pattern3D');
+    if (!svg) return;
+    const cx = 150, cy = 155;
+    let html = '';
+
+    // Background gradient
+    html += `<defs>
+      <radialGradient id="g3d" cx="50%" cy="45%" r="45%">
+        <stop offset="0%" stop-color="#E0F7FA" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#E0F7FA" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="donutGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#26A69A"/>
+        <stop offset="50%" stop-color="#00897B"/>
+        <stop offset="100%" stop-color="#004D40"/>
+      </linearGradient>
+    </defs>`;
+    html += `<circle cx="${cx}" cy="${cy}" r="130" fill="url(#g3d)"/>`;
+
+    // Axis
+    html += `<line x1="${cx}" y1="${cy-120}" x2="${cx}" y2="${cy+120}" stroke="#90A4AE" stroke-width="0.8" stroke-dasharray="4,4"/>`;
+    html += `<text x="${cx+6}" y="${cy-115}" font-family="Inter, sans-serif" font-size="8" fill="#607D8B" font-weight="600">Z (Zenith)</text>`;
+
+    // Draw toroidal slices (perspective view)
+    // Tilt angle for 3D effect
+    const tilt = 0.35; // perspective tilt factor
+    const R_major = 85; // distance from center to tube center
+    const R_minor = 35; // tube radius
+
+    // Draw back half first (behind axis)
+    for (let slice = 180; slice >= 0; slice -= 6) {
+      const phi = slice * Math.PI / 180;
+      const opacity = 0.12 + 0.08 * Math.sin(phi);
+
+      let points = [];
+      for (let theta = 0; theta <= 360; theta += 5) {
+        const t = theta * Math.PI / 180;
+        const r = R_major + R_minor * Math.cos(t);
+        const x = cx + r * Math.cos(phi);
+        const y = cy - (R_minor * Math.sin(t)) * 1.0 - r * Math.sin(phi) * tilt;
+        points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+      }
+      html += `<polygon points="${points.join(' ')}" fill="none" stroke="rgba(0,137,123,${opacity})" stroke-width="0.8"/>`;
+    }
+
+    // Draw front half (in front of axis)
+    for (let slice = 180; slice <= 360; slice += 6) {
+      const phi = slice * Math.PI / 180;
+      const opacity = 0.15 + 0.15 * (1 - Math.abs(Math.cos(phi)));
+
+      let points = [];
+      for (let theta = 0; theta <= 360; theta += 5) {
+        const t = theta * Math.PI / 180;
+        const r = R_major + R_minor * Math.cos(t);
+        const x = cx + r * Math.cos(phi);
+        const y = cy - (R_minor * Math.sin(t)) * 1.0 - r * Math.sin(phi) * tilt;
+        points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+      }
+      html += `<polygon points="${points.join(' ')}" fill="none" stroke="rgba(0,105,92,${opacity})" stroke-width="1"/>`;
+    }
+
+    // Highlight outline: draw one prominent cross-section at phi=270 (front)
+    let mainRing = [];
+    for (let theta = 0; theta <= 360; theta += 3) {
+      const t = theta * Math.PI / 180;
+      const r = R_major + R_minor * Math.cos(t);
+      const x = cx + r * Math.cos(3 * Math.PI / 2);
+      const y = cy - (R_minor * Math.sin(t)) - r * Math.sin(3 * Math.PI / 2) * tilt;
+      mainRing.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+    }
+    html += `<polygon points="${mainRing.join(' ')}" fill="rgba(0,137,123,0.25)" stroke="#00897B" stroke-width="2"/>`;
+
+    // And one at phi=0 (right side)
+    let sideRing = [];
+    for (let theta = 0; theta <= 360; theta += 3) {
+      const t = theta * Math.PI / 180;
+      const r = R_major + R_minor * Math.cos(t);
+      const x = cx + r * 1.0;
+      const y = cy - (R_minor * Math.sin(t));
+      sideRing.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+    }
+    html += `<polygon points="${sideRing.join(' ')}" fill="rgba(0,137,123,0.15)" stroke="#00897B" stroke-width="1.5" stroke-dasharray="4,3"/>`;
+
+    // Center dot and loop indicator
+    html += `<circle cx="${cx}" cy="${cy}" r="3" fill="#004D40"/>`;
+
+    // Loop orientation indicator
+    html += `<ellipse cx="${cx}" cy="${cy}" rx="18" ry="8" fill="none" stroke="#E65100" stroke-width="1.5" stroke-dasharray="3,3" transform="rotate(-10,${cx},${cy})"/>`;
+    html += `<text x="${cx+22}" y="${cy+4}" font-family="Inter, sans-serif" font-size="8" fill="#E65100" font-weight="700">Loop</text>`;
+
+    // Labels
+    html += `<text x="${cx}" y="${cy+140}" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#546E7A" font-weight="600">Donut pattern: max perpendicular to loop</text>`;
+
+    svg.innerHTML = html;
+  })();
+
+});
+</script>
+
 </body>
 </html>
