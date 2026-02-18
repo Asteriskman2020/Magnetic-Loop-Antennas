@@ -460,13 +460,21 @@
   /* ── Print / PDF ── */
   @media print {
     body {
-      padding: 20px;
+      padding: 14px;
       background: linear-gradient(160deg, #E8F8F5, #D5F0EB, #C2E8E0) !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-    .card { break-inside: avoid; box-shadow: none; border: 1px solid #B2DFDB; }
-    @page { margin: 12mm; size: A3 portrait; }
+    .poster { max-width: 100%; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #B2DFDB; padding: 22px; }
+    .header { padding: 30px 40px 28px; margin-bottom: 18px; }
+    .header h1 { font-size: 2.4rem; }
+    .grid { gap: 16px; margin-bottom: 16px; }
+    .section-label { margin-bottom: 14px; }
+    .big-stat { padding: 10px 6px 8px; }
+    .big-stat .number { font-size: 2.4rem; }
+    .footer { padding: 14px; }
+    @page { margin: 8mm; size: 420mm 1600mm; }
   }
 
   @media (max-width: 900px) {
