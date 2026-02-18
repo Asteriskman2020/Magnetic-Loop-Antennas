@@ -26,7 +26,7 @@
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(160deg, #D4F5F0 0%, #B2ECD7 20%, #9DE0CE 40%, #B2DFDB 60%, #A8D8D0 80%, #C5E8E0 100%);
+    background: linear-gradient(160deg, #E8F4FD 0%, #D6ECFA 20%, #C4E4F8 40%, #D0EAF9 60%, #DBF0FC 80%, #EAF6FE 100%);
     min-height: 100vh;
     padding: 36px;
     color: #1a1a2e;
@@ -459,22 +459,26 @@
 
   /* ── Print / PDF ── */
   @media print {
+    html {
+      zoom: 0.29;
+    }
     body {
-      padding: 14px;
-      background: linear-gradient(160deg, #E8F8F5, #D5F0EB, #C2E8E0) !important;
+      padding: 6px;
+      background: linear-gradient(160deg, #EBF4FE, #DFF0FD, #D4EBFC) !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
     .poster { max-width: 100%; }
-    .card { break-inside: avoid; box-shadow: none; border: 1px solid #B2DFDB; padding: 22px; }
-    .header { padding: 30px 40px 28px; margin-bottom: 18px; }
-    .header h1 { font-size: 2.4rem; }
-    .grid { gap: 16px; margin-bottom: 16px; }
-    .section-label { margin-bottom: 14px; }
-    .big-stat { padding: 10px 6px 8px; }
-    .big-stat .number { font-size: 2.4rem; }
-    .footer { padding: 14px; }
-    @page { margin: 8mm; size: 420mm 1600mm; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #C8DFF0; padding: 18px; border-radius: 14px; }
+    .header { padding: 24px 32px 20px; margin-bottom: 14px; }
+    .header h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    .grid { gap: 12px; margin-bottom: 12px; }
+    .section-label { margin-bottom: 12px; }
+    .big-stat .number { font-size: 2.2rem; }
+    .footer { padding: 12px; }
+    .diagram-container svg { width: 340px; }
+    .warning { padding: 14px 18px; }
+    @page { margin: 4mm; size: A4 portrait; }
   }
 
   @media (max-width: 900px) {
