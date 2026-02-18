@@ -906,6 +906,33 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
+       3D RADIATION PATTERNS
+       ═══════════════════════════════════════════════ -->
+  <div class="section-label"><span>3D Radiation Pattern &mdash; Wireframe View</span></div>
+
+  <div class="grid">
+    <!-- 3D NVIS Pattern -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" fill="none" stroke="white" stroke-width="2"/></svg></span> 3D NVIS Pattern &mdash; 40 m Over Ground</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">kh = 0.73 &bull; Height 5 m &bull; Upward Lobe</div>
+        <svg id="nvis3d" viewBox="0 0 500 400" width="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">Radiation concentrated upward &bull; Ground suppresses horizon &bull; Ideal NVIS shape</div>
+      </div>
+    </div>
+
+    <!-- 3D Free-Space Pattern (for comparison) -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" fill="none" stroke="white" stroke-width="2"/></svg></span> 3D Free-Space Pattern &mdash; Reference</h2>
+      <div class="pattern-wrap">
+        <div class="pattern-title">No Ground &bull; Toroidal (Donut) &bull; DX Mode</div>
+        <svg id="freeSpace3d" viewBox="0 0 500 400" width="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="pattern-subtitle">Classic donut around magnetic moment axis &bull; No zenith null &bull; Horizon maximum broadside</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
        NVIS PATTERN DETAIL — ELEVATION DATA + COVERAGE
        ═══════════════════════════════════════════════ -->
   <div class="grid">
@@ -1424,6 +1451,232 @@ document.addEventListener('DOMContentLoaded', function() {
 
     svg.innerHTML = html;
   })();
+
+  // ══════════════════════════════════════════════════
+  // ── 3D Wireframe Renderer (shared) ──
+  // ══════════════════════════════════════════════════
+  function render3dPattern(svgId, patternFn, opts) {
+    const svg = document.getElementById(svgId);
+    if (!svg) return;
+    const defaults = {
+      cx: 250, cy: 230, scale: 150,
+      viewElev: 28, viewAzim: -35,
+      nPhi: 24, nTheta: 40,
+      meridianColor: '#00897B', parallelColor: '#00695C',
+      fillColor: 'rgba(0,137,123,0.06)',
+      showGround: true, showZenith: true,
+      groundLabel: 'GROUND PLANE',
+      zenithLabel: 'ZENITH',
+      title: ''
+    };
+    const o = Object.assign(defaults, opts);
+    const { cx, cy, scale, nPhi, nTheta } = o;
+    const vE = o.viewElev * Math.PI / 180;
+    const vA = o.viewAzim * Math.PI / 180;
+
+    // Projection: 3D → 2D (rotate by view angles)
+    function proj(x, y, z) {
+      const x1 = x * Math.cos(vA) - y * Math.sin(vA);
+      const y1 = x * Math.sin(vA) + y * Math.cos(vA);
+      const x2 = x1;
+      const z2 = y1 * Math.sin(vE) + z * Math.cos(vE);
+      const y2 = y1 * Math.cos(vE) - z * Math.sin(vE);
+      return { px: cx + scale * x2, py: cy - scale * z2, depth: y2 };
+    }
+
+    // Spherical → Cartesian
+    function s2c(theta, phi, r) {
+      return {
+        x: r * Math.sin(theta) * Math.cos(phi),
+        y: r * Math.sin(theta) * Math.sin(phi),
+        z: r * Math.cos(theta)
+      };
+    }
+
+    let html = '';
+
+    // ── Ground plane (ellipse) ──
+    if (o.showGround) {
+      let gpts = [];
+      for (let d = 0; d <= 360; d += 4) {
+        const rad = d * Math.PI / 180;
+        const p = proj(1.15 * Math.cos(rad), 1.15 * Math.sin(rad), 0);
+        gpts.push(`${p.px.toFixed(1)},${p.py.toFixed(1)}`);
+      }
+      html += `<polygon points="${gpts.join(' ')}" fill="#795548" fill-opacity="0.06" stroke="#795548" stroke-width="1.2" stroke-opacity="0.25"/>`;
+      // Ground grid lines
+      for (let i = -1; i <= 1; i += 0.5) {
+        let pts1 = [], pts2 = [];
+        for (let t = -1.15; t <= 1.15; t += 0.1) {
+          const p1 = proj(t, i * 1.15, 0);
+          pts1.push(`${p1.px.toFixed(1)},${p1.py.toFixed(1)}`);
+          const p2 = proj(i * 1.15, t, 0);
+          pts2.push(`${p2.px.toFixed(1)},${p2.py.toFixed(1)}`);
+        }
+        html += `<polyline points="${pts1.join(' ')}" fill="none" stroke="#795548" stroke-width="0.3" opacity="0.15"/>`;
+        html += `<polyline points="${pts2.join(' ')}" fill="none" stroke="#795548" stroke-width="0.3" opacity="0.15"/>`;
+      }
+      // Ground label
+      const gl = proj(1.3, 1.0, 0);
+      html += `<text x="${gl.px}" y="${gl.py+4}" font-family="Inter,sans-serif" font-size="8" fill="#795548" font-weight="700">${o.groundLabel}</text>`;
+    }
+
+    // ── Coordinate axes ──
+    const axLen = 1.35;
+    // X-axis (loop end-fire direction)
+    const ax1 = proj(axLen, 0, 0), ax2 = proj(-axLen, 0, 0);
+    html += `<line x1="${ax1.px}" y1="${ax1.py}" x2="${ax2.px}" y2="${ax2.py}" stroke="#90A4AE" stroke-width="0.6" stroke-dasharray="5,5"/>`;
+    html += `<text x="${ax1.px+6}" y="${ax1.py+3}" font-family="Inter,sans-serif" font-size="7.5" fill="#78909C" font-weight="600">End-fire</text>`;
+
+    // Y-axis (broadside direction)
+    const ay1 = proj(0, axLen, 0), ay2 = proj(0, -axLen, 0);
+    html += `<line x1="${ay1.px}" y1="${ay1.py}" x2="${ay2.px}" y2="${ay2.py}" stroke="#90A4AE" stroke-width="0.6" stroke-dasharray="5,5"/>`;
+    html += `<text x="${ay1.px+6}" y="${ay1.py+3}" font-family="Inter,sans-serif" font-size="7.5" fill="#00695C" font-weight="700">Broadside</text>`;
+
+    // Z-axis (zenith)
+    if (o.showZenith) {
+      const az1 = proj(0, 0, 0), az2 = proj(0, 0, axLen);
+      html += `<line x1="${az1.px}" y1="${az1.py}" x2="${az2.px}" y2="${az2.py}" stroke="#607D8B" stroke-width="0.8" stroke-dasharray="4,4"/>`;
+      html += `<text x="${az2.px+2}" y="${az2.py-6}" font-family="Inter,sans-serif" font-size="9" fill="#004D40" font-weight="800">${o.zenithLabel}</text>`;
+    }
+
+    // ── Collect all wireframe segments for depth sorting ──
+    let segments = [];
+
+    // Meridians (constant φ)
+    for (let pi = 0; pi < nPhi; pi++) {
+      const phi = (pi / nPhi) * 2 * Math.PI;
+      let pts = [];
+      let avgDepth = 0;
+      for (let ti = 0; ti <= nTheta; ti++) {
+        const theta = (ti / nTheta) * (o.showGround ? Math.PI / 2 : Math.PI);
+        const r = patternFn(theta, phi);
+        const c = s2c(theta, phi, r);
+        const p = proj(c.x, c.y, c.z);
+        pts.push(p);
+        avgDepth += p.depth;
+      }
+      avgDepth /= pts.length;
+      segments.push({ pts, depth: avgDepth, type: 'meridian' });
+    }
+
+    // Parallels (constant θ / elevation)
+    const elevAngles = o.showGround ? [15, 30, 45, 60, 75, 85] : [15, 30, 45, 60, 75, 85, 105, 120, 135, 150, 165];
+    elevAngles.forEach(elevDeg => {
+      const theta = (o.showGround ? (90 - elevDeg) : elevDeg) * Math.PI / 180;
+      let pts = [];
+      let avgDepth = 0;
+      for (let pi = 0; pi <= 360; pi += 3) {
+        const phi = pi * Math.PI / 180;
+        const r = patternFn(theta, phi);
+        const c = s2c(theta, phi, r);
+        const p = proj(c.x, c.y, c.z);
+        pts.push(p);
+        avgDepth += p.depth;
+      }
+      avgDepth /= pts.length;
+      segments.push({ pts, depth: avgDepth, type: 'parallel', elev: elevDeg });
+    });
+
+    // Sort back-to-front (draw far things first)
+    segments.sort((a, b) => a.depth - b.depth);
+
+    // ── Draw wireframe ──
+    segments.forEach(seg => {
+      const pts = seg.pts.map(p => `${p.px.toFixed(1)},${p.py.toFixed(1)}`).join(' ');
+      if (seg.type === 'meridian') {
+        html += `<polyline points="${pts}" fill="none" stroke="${o.meridianColor}" stroke-width="0.8" opacity="0.45"/>`;
+      } else {
+        const isNVIS = seg.elev && seg.elev >= 45;
+        const sw = isNVIS ? '1.3' : '0.7';
+        const op = isNVIS ? '0.7' : '0.35';
+        html += `<polyline points="${pts}" fill="none" stroke="${o.parallelColor}" stroke-width="${sw}" opacity="${op}"/>`;
+      }
+    });
+
+    // ── Filled silhouette for key meridians (broadside & end-fire) ──
+    [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2].forEach((phi, idx) => {
+      let pts = [];
+      const thetaMax = o.showGround ? Math.PI / 2 : Math.PI;
+      for (let ti = 0; ti <= 80; ti++) {
+        const theta = (ti / 80) * thetaMax;
+        const r = patternFn(theta, phi);
+        const c = s2c(theta, phi, r);
+        const p = proj(c.x, c.y, c.z);
+        pts.push(`${p.px.toFixed(1)},${p.py.toFixed(1)}`);
+      }
+      const origin = proj(0, 0, 0);
+      pts.push(`${origin.px.toFixed(1)},${origin.py.toFixed(1)}`);
+      const isBroadside = (idx === 1 || idx === 3);
+      const col = isBroadside ? o.meridianColor : '#78909C';
+      const sw = isBroadside ? '2.5' : '1.5';
+      const op = isBroadside ? '0.85' : '0.5';
+      html += `<polyline points="${pts.join(' ')}" fill="none" stroke="${col}" stroke-width="${sw}" opacity="${op}" stroke-linejoin="round"/>`;
+    });
+
+    // ── Peak indicator ──
+    if (o.showGround) {
+      // Peak at zenith for NVIS
+      const peakR = patternFn(0, 0);
+      const peakP = proj(0, 0, peakR);
+      html += `<circle cx="${peakP.px}" cy="${peakP.py}" r="4" fill="#E65100" opacity="0.8"/>`;
+      html += `<text x="${peakP.px+8}" y="${peakP.py+3}" font-family="Inter,sans-serif" font-size="8" fill="#E65100" font-weight="700">PEAK (0 dB)</text>`;
+
+      // -3 dB ring label
+      const db3Theta = 45 * Math.PI / 180; // at ~45° from zenith
+      const db3R = patternFn(db3Theta, 0);
+      const db3C = s2c(db3Theta, -0.3, db3R);
+      const db3P = proj(db3C.x, db3C.y, db3C.z);
+      html += `<circle cx="${db3P.px}" cy="${db3P.py}" r="3" fill="#FF6F00"/>`;
+      html += `<text x="${db3P.px+7}" y="${db3P.py+3}" font-family="JetBrains Mono,monospace" font-size="7" fill="#FF6F00" font-weight="700">-3 dB @ 45°</text>`;
+    }
+
+    // ── Loop orientation indicator ──
+    const loopR = 0.15;
+    let loopPts = [];
+    for (let d = 0; d <= 360; d += 10) {
+      const rad = d * Math.PI / 180;
+      const lp = proj(loopR * Math.cos(rad), 0, loopR * Math.sin(rad));
+      loopPts.push(`${lp.px.toFixed(1)},${lp.py.toFixed(1)}`);
+    }
+    html += `<polygon points="${loopPts.join(' ')}" fill="rgba(191,54,12,0.15)" stroke="#BF360C" stroke-width="1.5"/>`;
+    const loopLabel = proj(0.22, 0, 0);
+    html += `<text x="${loopLabel.px-28}" y="${loopLabel.py+14}" font-family="Inter,sans-serif" font-size="7" fill="#BF360C" font-weight="700">LOOP</text>`;
+
+    svg.innerHTML = html;
+  }
+
+  // ── 3D NVIS Pattern (40m, kh=0.734, over ground) ──
+  render3dPattern('nvis3d', function(theta, phi) {
+    // Vertical loop: moment along y. Pattern ∝ sin(angle from y-axis)
+    const sinPsi = Math.sqrt(1 - Math.pow(Math.sin(theta) * Math.sin(phi), 2));
+    // Ground array factor
+    const kh = 0.734;
+    const af = Math.abs(Math.sin(kh * Math.cos(theta)));
+    return sinPsi * af / Math.sin(kh); // normalise so zenith broadside = 1
+  }, {
+    showGround: true,
+    groundLabel: 'GROUND PLANE',
+    zenithLabel: 'ZENITH (90°)',
+    meridianColor: '#00897B',
+    parallelColor: '#004D40'
+  });
+
+  // ── 3D Free-Space Pattern (toroidal/donut) ──
+  render3dPattern('freeSpace3d', function(theta, phi) {
+    // Vertical loop: moment along y. Pattern ∝ sin(angle from y-axis)
+    const sinPsi = Math.sqrt(1 - Math.pow(Math.sin(theta) * Math.sin(phi), 2));
+    return sinPsi; // normalised max = 1
+  }, {
+    showGround: false,
+    zenithLabel: 'ZENITH',
+    viewElev: 22,
+    viewAzim: -40,
+    meridianColor: '#E65100',
+    parallelColor: '#BF360C',
+    nPhi: 20,
+    nTheta: 50
+  });
 
   // ── Azimuth Pattern (cos(phi) figure-8) ──
   (function() {
