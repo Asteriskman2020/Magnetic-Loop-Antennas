@@ -1158,6 +1158,242 @@ body::before {
     </div>
   </div>
 
+  <!-- ════════════════════════════ COUPLING LOOP + POLE MOUNTING ════════════════════════════ -->
+  <div class="section-label"><span>Construction Detail &mdash; Coupling Loop &amp; Pole Mounting</span></div>
+
+  <div class="grid">
+    <!-- Coupling Loop Detail -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="white" stroke-width="2.5"/></svg></span> Coupling Loop &mdash; Connection Detail</h2>
+      <div style="display:flex;justify-content:center;padding:4px 0;">
+        <svg viewBox="0 0 520 440" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="clCoax" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#37474F"/>
+              <stop offset="50%" stop-color="#546E7A"/>
+              <stop offset="100%" stop-color="#37474F"/>
+            </linearGradient>
+            <marker id="arOrange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0,0 8,3 0,6" fill="#E65100"/>
+            </marker>
+          </defs>
+
+          <!-- Title -->
+          <text x="260" y="20" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#3E2723" font-weight="800" letter-spacing="1">COUPLING LOOP ASSEMBLY</text>
+
+          <!-- Main loop bottom section (partial arc) -->
+          <path d="M 60 120 Q 60 260, 260 280 Q 460 260, 460 120" fill="none" stroke="#D84315" stroke-width="10" stroke-linecap="round" opacity="0.25"/>
+          <text x="460" y="108" font-family="Inter,sans-serif" font-size="10" fill="#BF360C" font-weight="700">MAIN LOOP</text>
+          <text x="460" y="120" font-family="Inter,sans-serif" font-size="9" fill="#78909C">(2.0 m, 5/8" Cu)</text>
+
+          <!-- Coupling loop (0.40 m) -->
+          <ellipse cx="260" cy="220" rx="90" ry="55" fill="none" stroke="#E65100" stroke-width="5" stroke-linecap="round" stroke-dasharray="520,600" stroke-dashoffset="-540"/>
+
+          <!-- Shield braid (outer) -->
+          <ellipse cx="260" cy="220" rx="93" ry="58" fill="none" stroke="#78909C" stroke-width="2" stroke-dasharray="4,6" opacity="0.5"/>
+          <text x="370" y="195" font-family="Inter,sans-serif" font-size="9" fill="#546E7A" font-weight="600">SHIELD BRAID</text>
+          <text x="370" y="207" font-family="Inter,sans-serif" font-size="8" fill="#90A4AE">(connected one</text>
+          <text x="370" y="217" font-family="Inter,sans-serif" font-size="8" fill="#90A4AE">side only)</text>
+
+          <!-- Faraday gap at top -->
+          <rect x="248" y="163" width="24" height="10" rx="3" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5"/>
+          <text x="260" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#E65100" font-weight="800">SHIELD GAP</text>
+          <text x="260" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#BF360C" font-weight="600">(critical &mdash; must break shield)</text>
+
+          <!-- Feed point at bottom -->
+          <circle cx="230" cy="274" r="6" fill="#E65100"/>
+          <circle cx="290" cy="274" r="6" fill="#37474F"/>
+          <text x="230" y="295" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#E65100" font-weight="700">CENTRE</text>
+          <text x="230" y="305" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E65100">conductor</text>
+          <text x="290" y="295" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#37474F" font-weight="700">SHIELD</text>
+          <text x="290" y="305" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#546E7A">braid</text>
+
+          <!-- Coax feed line -->
+          <rect x="250" y="310" width="20" height="55" rx="4" fill="url(#clCoax)"/>
+          <rect x="254" y="310" width="12" height="55" rx="3" fill="#607D8B" opacity="0.5"/>
+
+          <!-- SO-239 connector -->
+          <rect x="240" y="365" width="40" height="20" rx="4" fill="#78909C" stroke="#546E7A" stroke-width="1.5"/>
+          <circle cx="260" cy="375" r="5" fill="#37474F" stroke="#263238" stroke-width="1"/>
+          <text x="260" y="400" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3E2723" font-weight="800">SO-239</text>
+          <text x="260" y="412" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" fill="#5D4037" font-weight="600">Panel-mount connector</text>
+
+          <!-- Coax to radio -->
+          <rect x="254" y="385" width="12" height="30" rx="3" fill="#37474F"/>
+          <text x="260" y="430" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#37474F" font-weight="700">TO RADIO (50 &Omega;)</text>
+          <text x="260" y="440" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#78909C">RG-213 / LMR-400</text>
+
+          <!-- Dimension: 0.40 m -->
+          <line x1="170" y1="215" x2="170" y2="225" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="350" y1="215" x2="350" y2="225" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="170" y1="220" x2="220" y2="220" stroke="#3E2723" stroke-width="0.8" marker-end="url(#arOrange)"/>
+          <line x1="350" y1="220" x2="300" y2="220" stroke="#3E2723" stroke-width="0.8" marker-end="url(#arOrange)"/>
+          <rect x="222" y="210" width="76" height="18" rx="4" fill="white" stroke="#E8C8A0" stroke-width="0.5"/>
+          <text x="260" y="224" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#3E2723" font-weight="700">&empty; 0.40 m</text>
+
+          <!-- Construction note callouts -->
+          <rect x="15" y="32" width="200" height="100" rx="8" fill="#FFF3E0" stroke="#E8C8A0" stroke-width="1"/>
+          <text x="25" y="50" font-family="Inter,sans-serif" font-size="9" fill="#3E2723" font-weight="800">CONSTRUCTION:</text>
+          <text x="25" y="64" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">1. Use RG-213 coax as the</text>
+          <text x="25" y="75" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">   coupling loop material</text>
+          <text x="25" y="89" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">2. Strip jacket, bend into</text>
+          <text x="25" y="100" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">   0.40 m diameter circle</text>
+          <text x="25" y="114" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">3. Cut shield braid at TOP</text>
+          <text x="25" y="125" font-family="Inter,sans-serif" font-size="8" fill="#E65100" font-weight="700">   (Faraday gap = 10-15 mm)</text>
+
+          <rect x="305" y="32" width="200" height="100" rx="8" fill="#FFF3E0" stroke="#E8C8A0" stroke-width="1"/>
+          <text x="315" y="50" font-family="Inter,sans-serif" font-size="9" fill="#3E2723" font-weight="800">CONNECTIONS:</text>
+          <text x="315" y="64" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">4. At BOTTOM, solder centre</text>
+          <text x="315" y="75" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">   conductor to one end</text>
+          <text x="315" y="89" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">5. Solder shield braid to</text>
+          <text x="315" y="100" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">   the other end</text>
+          <text x="315" y="114" font-family="Inter,sans-serif" font-size="8" fill="#5D4037">6. Connect feed coax via</text>
+          <text x="315" y="125" font-family="Inter,sans-serif" font-size="8" fill="#E65100" font-weight="700">   SO-239 at loop base</text>
+        </svg>
+      </div>
+      <div style="margin-top:8px;background:#FFF3E0;border-radius:10px;padding:12px 16px;font-size:0.82rem;color:#5D4037;line-height:1.6;">
+        <strong style="color:#BF360C;">Key principle:</strong> The Faraday-shielded coupling loop ensures
+        <strong>inductive coupling only</strong> &mdash; the shield blocks capacitive coupling,
+        giving a clean 50 &Omega; match. The gap in the shield at the top is critical:
+        without it, the shield forms a shorted turn. Position the coupling loop
+        <strong>directly opposite</strong> the capacitor (at the bottom of the main loop)
+        for best coupling symmetry.
+      </div>
+    </div>
+
+    <!-- Pole Mounting Detail -->
+    <div class="card">
+      <h2><span class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V8l6-5 6 5v13" fill="none" stroke="white" stroke-width="2"/></svg></span> Pole Mounting &mdash; Assembly Detail</h2>
+      <div style="display:flex;justify-content:center;padding:4px 0;">
+        <svg viewBox="0 0 520 440" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="poleGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#90A4AE"/>
+              <stop offset="30%" stop-color="#B0BEC5"/>
+              <stop offset="70%" stop-color="#B0BEC5"/>
+              <stop offset="100%" stop-color="#90A4AE"/>
+            </linearGradient>
+            <linearGradient id="tubeGr" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#BF360C"/>
+              <stop offset="50%" stop-color="#FF8A65"/>
+              <stop offset="100%" stop-color="#BF360C"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Title -->
+          <text x="260" y="20" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#3E2723" font-weight="800" letter-spacing="1">POLE MOUNTING ASSEMBLY</text>
+
+          <!-- Ground -->
+          <rect x="0" y="400" width="520" height="40" fill="#8D6E63" opacity="0.12"/>
+          <line x1="0" y1="400" x2="520" y2="400" stroke="#6D4C41" stroke-width="2"/>
+          <text x="490" y="418" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#6D4C41" font-weight="700">GROUND</text>
+
+          <!-- Mast / pole -->
+          <rect x="248" y="30" width="24" height="370" rx="4" fill="url(#poleGrad)" stroke="#78909C" stroke-width="1"/>
+          <text x="240" y="385" text-anchor="end" font-family="Inter,sans-serif" font-size="8" fill="#546E7A" font-weight="600" transform="rotate(-90,240,385)">FIBREGLASS / PVC MAST (4-5 m)</text>
+
+          <!-- Cross-arm (T-bracket) -->
+          <rect x="140" y="68" width="240" height="12" rx="3" fill="#78909C" stroke="#607D8B" stroke-width="1"/>
+          <text x="260" y="62" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#3E2723" font-weight="700">CROSS-ARM (non-metallic)</text>
+
+          <!-- U-bolts on cross-arm -->
+          <path d="M 175 68 Q 175 55, 185 55 Q 195 55, 195 68" fill="none" stroke="#455A64" stroke-width="2.5"/>
+          <circle cx="175" cy="82" r="3" fill="#455A64"/>
+          <circle cx="195" cy="82" r="3" fill="#455A64"/>
+          <path d="M 325 68 Q 325 55, 335 55 Q 345 55, 345 68" fill="none" stroke="#455A64" stroke-width="2.5"/>
+          <circle cx="325" cy="82" r="3" fill="#455A64"/>
+          <circle cx="345" cy="82" r="3" fill="#455A64"/>
+          <text x="185" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#455A64" font-weight="700">U-BOLT</text>
+          <text x="335" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#455A64" font-weight="700">U-BOLT</text>
+
+          <!-- Main loop (vertical circle on cross-arm) -->
+          <circle cx="260" cy="205" r="125" fill="none" stroke="url(#tubeGr)" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="260" cy="205" r="121" fill="none" stroke="#FFAB91" stroke-width="2" opacity="0.3"/>
+
+          <!-- Capacitor at top -->
+          <rect x="243" y="74" width="34" height="20" rx="5" fill="#B0BEC5" stroke="#78909C" stroke-width="1.2"/>
+          <text x="260" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#37474F" font-weight="700">CAP</text>
+          <rect x="253" y="54" width="14" height="22" rx="3" fill="#78909C"/>
+          <text x="260" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#37474F" font-weight="600">MOTOR</text>
+
+          <!-- Coupling loop at bottom -->
+          <ellipse cx="260" cy="330" rx="35" ry="18" fill="none" stroke="#E65100" stroke-width="3.5"/>
+
+          <!-- Coax from coupling loop down mast -->
+          <line x1="260" y1="348" x2="260" y2="400" stroke="#37474F" stroke-width="3"/>
+          <text x="275" y="380" font-family="Inter,sans-serif" font-size="7.5" fill="#37474F" font-weight="600">COAX</text>
+          <text x="275" y="390" font-family="Inter,sans-serif" font-size="7" fill="#78909C">taped to mast</text>
+
+          <!-- Guy wires (non-metallic) -->
+          <line x1="155" y1="74" x2="60" y2="380" stroke="#A1887F" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="365" y1="74" x2="460" y2="380" stroke="#A1887F" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="50" y="375" font-family="Inter,sans-serif" font-size="7.5" fill="#8D6E63" font-weight="600">GUY WIRE</text>
+          <text x="50" y="385" font-family="Inter,sans-serif" font-size="6.5" fill="#A1887F">(Dacron/nylon)</text>
+          <text x="440" y="375" font-family="Inter,sans-serif" font-size="7.5" fill="#8D6E63" font-weight="600">GUY WIRE</text>
+          <text x="440" y="385" font-family="Inter,sans-serif" font-size="6.5" fill="#A1887F">(Dacron/nylon)</text>
+
+          <!-- Guy stakes -->
+          <line x1="55" y1="395" x2="65" y2="405" stroke="#6D4C41" stroke-width="2"/>
+          <line x1="455" y1="395" x2="465" y2="405" stroke="#6D4C41" stroke-width="2"/>
+
+          <!-- Height dimension -->
+          <line x1="485" y1="74" x2="485" y2="400" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="480" y1="74" x2="490" y2="74" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="480" y1="400" x2="490" y2="400" stroke="#3E2723" stroke-width="0.8"/>
+          <rect x="472" y="225" width="36" height="30" rx="4" fill="white" stroke="#E8C8A0" stroke-width="0.5"/>
+          <text x="490" y="238" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#3E2723" font-weight="700">4-5 m</text>
+          <text x="490" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="6.5" fill="#5D4037" font-weight="600">HEIGHT</text>
+
+          <!-- Loop diameter dimension -->
+          <line x1="135" y1="200" x2="135" y2="210" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="385" y1="200" x2="385" y2="210" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="135" y1="205" x2="175" y2="205" stroke="#3E2723" stroke-width="0.8" marker-end="url(#arOrange)"/>
+          <line x1="385" y1="205" x2="345" y2="205" stroke="#3E2723" stroke-width="0.8" marker-end="url(#arOrange)"/>
+          <rect x="218" y="195" width="84" height="18" rx="4" fill="white" stroke="#E8C8A0" stroke-width="0.5"/>
+          <text x="260" y="209" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#3E2723" font-weight="700">D = 2.0 m</text>
+
+          <!-- Bottom clearance dimension -->
+          <line x1="40" y1="330" x2="40" y2="400" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="35" y1="330" x2="45" y2="330" stroke="#3E2723" stroke-width="0.8"/>
+          <line x1="35" y1="400" x2="45" y2="400" stroke="#3E2723" stroke-width="0.8"/>
+          <rect x="20" y="355" width="40" height="26" rx="4" fill="white" stroke="#E8C8A0" stroke-width="0.5"/>
+          <text x="40" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#3E2723" font-weight="700">&ge;2 m</text>
+          <text x="40" y="376" text-anchor="middle" font-family="Inter,sans-serif" font-size="6" fill="#E65100" font-weight="700">CLEAR</text>
+
+          <!-- Mast base mount -->
+          <rect x="238" y="392" width="44" height="12" rx="3" fill="#6D4C41"/>
+          <text x="260" y="420" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5D4037" font-weight="700">GROUND PLATE / TILT BASE</text>
+
+          <!-- Step labels -->
+          <rect x="15" y="110" width="110" height="80" rx="6" fill="#FFF3E0" stroke="#E8C8A0" stroke-width="0.5"/>
+          <text x="25" y="126" font-family="Inter,sans-serif" font-size="8" fill="#3E2723" font-weight="800">MOUNTING STEPS:</text>
+          <text x="25" y="140" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">1. Attach cross-arm</text>
+          <text x="25" y="151" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">   to mast top</text>
+          <text x="25" y="164" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">2. U-bolt loop to</text>
+          <text x="25" y="175" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">   cross-arm ends</text>
+          <text x="25" y="186" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">3. Tape coax to mast</text>
+
+          <rect x="395" y="110" width="110" height="80" rx="6" fill="#FFF3E0" stroke="#E8C8A0" stroke-width="0.5"/>
+          <text x="405" y="126" font-family="Inter,sans-serif" font-size="8" fill="#3E2723" font-weight="800">MATERIALS:</text>
+          <text x="405" y="140" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">&bull; PVC/fibreglass mast</text>
+          <text x="405" y="153" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">&bull; Nylon U-bolts (×4)</text>
+          <text x="405" y="166" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">&bull; Dacron guy rope</text>
+          <text x="405" y="179" font-family="Inter,sans-serif" font-size="7.5" fill="#5D4037">&bull; Ground stake (×2)</text>
+          <text x="405" y="192" font-family="Inter,sans-serif" font-size="7.5" fill="#E65100" font-weight="600">&bull; Tilt base (optional)</text>
+        </svg>
+      </div>
+      <div style="margin-top:8px;background:#FFF3E0;border-radius:10px;padding:12px 16px;font-size:0.82rem;color:#5D4037;line-height:1.6;">
+        <strong style="color:#BF360C;">Mounting rules:</strong>
+        Use only <strong>non-metallic</strong> mast and hardware within 1 m of the loop &mdash;
+        metal near the loop couples magnetically and increases loss.
+        The cross-arm supports the loop at <strong>two points</strong> (10 &amp; 2 o'clock positions)
+        via nylon U-bolts. Guy wires must be <strong>non-conductive</strong> (Dacron, nylon, or Kevlar).
+        A tilt base allows lowering the mast for tuning adjustments.
+        Keep the <strong>bottom of the loop &ge; 2 m</strong> above ground for safety (high RF voltage on the conductor).
+      </div>
+    </div>
+  </div>
+
   <!-- ════════════════════════════ WARNING ════════════════════════════ -->
   <div class="warning">
     <div class="warn-icon">&#9888;</div>
