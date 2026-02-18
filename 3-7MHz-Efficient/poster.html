@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetic Loop Antenna — 80m &amp; 40m Maximum Efficiency Design</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(160deg, #E0F7FA 0%, #B2DFDB 35%, #80CBC4 70%, #B2DFDB 100%);
+    min-height: 100vh;
+    padding: 40px;
+    color: #1a1a2e;
+  }
+
+  .poster {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: linear-gradient(135deg, #004D40, #00695C, #00897B);
+    border-radius: 24px;
+    padding: 48px 56px;
+    color: white;
+    text-align: center;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px rgba(0,77,64,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .header .subtitle {
+    font-size: 1.25rem;
+    font-weight: 300;
+    opacity: 0.92;
+    letter-spacing: 0.5px;
+  }
+  .header .band-tags {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .band-tag {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 100px;
+    padding: 8px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── Grid Layout ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+  .grid.triple {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,77,64,0.12);
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #00695C;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #B2DFDB;
+  }
+
+  /* ── Specs List ── */
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid #E0F2F1;
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-label {
+    font-size: 0.92rem;
+    color: #546E7A;
+    font-weight: 400;
+  }
+  .spec-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+
+  /* ── Big Numbers ── */
+  .big-stat {
+    text-align: center;
+    padding: 20px 12px;
+  }
+  .big-stat .number {
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #004D40, #00897B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .big-stat .unit {
+    font-size: 1.6rem;
+    font-weight: 300;
+    opacity: 0.7;
+  }
+  .big-stat .label {
+    font-size: 0.85rem;
+    color: #546E7A;
+    margin-top: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── Efficiency Bars ── */
+  .eff-section { margin-bottom: 20px; }
+  .eff-section:last-child { margin-bottom: 0; }
+  .eff-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .eff-band {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1a1a2e;
+  }
+  .eff-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #00695C;
+  }
+  .eff-bar-bg {
+    height: 28px;
+    background: #E0F2F1;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+  .eff-bar-fill {
+    height: 100%;
+    border-radius: 14px;
+    transition: width 1s ease;
+  }
+  .eff-bar-fill.band80 {
+    background: linear-gradient(90deg, #26A69A, #00897B);
+    width: 30.5%;
+  }
+  .eff-bar-fill.band40 {
+    background: linear-gradient(90deg, #00897B, #004D40);
+    width: 83.3%;
+  }
+  .eff-bar-fill.ref80 {
+    background: linear-gradient(90deg, #FFAB91, #FF7043);
+    width: 0.7%;
+    min-width: 4px;
+  }
+  .eff-bar-fill.ref40 {
+    background: linear-gradient(90deg, #FFAB91, #FF7043);
+    width: 7.6%;
+  }
+  .eff-compare {
+    font-size: 0.82rem;
+    color: #78909C;
+    margin-top: 4px;
+  }
+  .eff-compare span {
+    color: #00897B;
+    font-weight: 700;
+  }
+
+  /* ── SVG Diagram ── */
+  .diagram-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  /* ── Performance Table ── */
+  .perf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .perf-table thead th {
+    background: #00897B;
+    color: white;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .perf-table thead th:first-child {
+    border-radius: 10px 0 0 0;
+    text-align: left;
+  }
+  .perf-table thead th:last-child {
+    border-radius: 0 10px 0 0;
+  }
+  .perf-table tbody td {
+    padding: 9px 12px;
+    text-align: center;
+    border-bottom: 1px solid #E0F2F1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+  }
+  .perf-table tbody td:first-child {
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #00695C;
+  }
+  .perf-table tbody tr:nth-child(even) {
+    background: rgba(178,223,219,0.2);
+  }
+  .perf-table tbody tr:hover {
+    background: rgba(0,137,123,0.08);
+  }
+  .highlight-cell {
+    font-weight: 700;
+    color: #004D40;
+  }
+
+  /* ── Improvement Badge ── */
+  .improvement {
+    display: inline-block;
+    background: linear-gradient(135deg, #004D40, #00695C);
+    color: white;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 0.85rem;
+    color: #546E7A;
+    margin-top: 12px;
+  }
+  .footer a {
+    color: #00695C;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .footer a:hover { text-decoration: underline; }
+
+  /* ── Formula Box ── */
+  .formula-box {
+    background: #E0F2F1;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #004D40;
+    line-height: 1.8;
+    margin-top: 12px;
+  }
+
+  /* ── Warning Box ── */
+  .warning {
+    background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+    border: 2px solid #FFB74D;
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .warning-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .warning-text {
+    font-size: 0.9rem;
+    color: #E65100;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { padding: 20px; background: white; }
+    .card { box-shadow: none; border: 1px solid #ddd; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .grid, .grid.triple { grid-template-columns: 1fr; }
+    .header h1 { font-size: 2rem; }
+    body { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <div class="header">
+    <h1>Maximum-Efficiency Magnetic Loop</h1>
+    <div class="subtitle">3.0 m Diameter &bull; 7/8" Copper Tube &bull; Vacuum Capacitor &bull; 100 W</div>
+    <div class="band-tags">
+      <span class="band-tag">80 m &mdash; 3.5 MHz</span>
+      <span class="band-tag">40 m &mdash; 7.0 MHz</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ KEY STATS ═══════════ -->
+  <div class="grid triple">
+    <div class="card">
+      <div class="big-stat">
+        <div class="number">3.0<span class="unit"> m</span></div>
+        <div class="label">Loop Diameter</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="big-stat">
+        <div class="number">9.397<span class="unit"> &micro;H</span></div>
+        <div class="label">Inductance</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="big-stat">
+        <div class="number">100<span class="unit"> W</span></div>
+        <div class="label">Max Power (PEP)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ MAIN CONTENT ═══════════ -->
+  <div class="grid">
+
+    <!-- Left: Antenna Diagram -->
+    <div class="card">
+      <h2>Antenna Geometry</h2>
+      <div class="diagram-container">
+        <svg viewBox="0 0 400 480" width="360" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background circle glow -->
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="48%" r="42%">
+              <stop offset="0%" stop-color="#B2DFDB" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#B2DFDB" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="tubeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#BF360C"/>
+              <stop offset="30%" stop-color="#E65100"/>
+              <stop offset="50%" stop-color="#FF8A65"/>
+              <stop offset="70%" stop-color="#E65100"/>
+              <stop offset="100%" stop-color="#BF360C"/>
+            </linearGradient>
+            <linearGradient id="capGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#78909C"/>
+              <stop offset="50%" stop-color="#CFD8DC"/>
+              <stop offset="100%" stop-color="#78909C"/>
+            </linearGradient>
+          </defs>
+
+          <circle cx="200" cy="220" r="160" fill="url(#glow)"/>
+
+          <!-- Main loop -->
+          <circle cx="200" cy="220" r="150" fill="none" stroke="url(#tubeGrad)"
+                  stroke-width="10" stroke-linecap="round"
+                  stroke-dasharray="920, 1000" stroke-dashoffset="-490"/>
+
+          <!-- Capacitor gap arcs (tube ends) -->
+          <path d="M 192 70.5 L 192 58" stroke="#BF360C" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <path d="M 208 70.5 L 208 58" stroke="#BF360C" stroke-width="10" stroke-linecap="round" fill="none"/>
+
+          <!-- Capacitor symbol -->
+          <rect x="178" y="42" width="44" height="28" rx="6" fill="url(#capGrad)" stroke="#546E7A" stroke-width="1.5"/>
+          <line x1="186" y1="52" x2="186" y2="62" stroke="#37474F" stroke-width="2"/>
+          <line x1="192" y1="48" x2="192" y2="66" stroke="#37474F" stroke-width="2.5"/>
+          <line x1="208" y1="48" x2="208" y2="66" stroke="#37474F" stroke-width="2.5"/>
+          <line x1="214" y1="52" x2="214" y2="62" stroke="#37474F" stroke-width="2"/>
+
+          <!-- Capacitor label -->
+          <text x="200" y="34" text-anchor="middle" font-family="Inter, sans-serif"
+                font-size="11" fill="#004D40" font-weight="700">VACUUM CAP</text>
+          <text x="200" y="88" text-anchor="middle" font-family="JetBrains Mono, monospace"
+                font-size="10" fill="#546E7A">55 &ndash; 220 pF</text>
+
+          <!-- Coupling loop -->
+          <ellipse cx="200" cy="370" rx="48" ry="30" fill="none" stroke="#00897B"
+                   stroke-width="5" stroke-linecap="round"
+                   stroke-dasharray="230, 250" stroke-dashoffset="-230"/>
+
+          <!-- Faraday gap indicator -->
+          <circle cx="200" cy="340" r="3" fill="#00897B"/>
+
+          <!-- Coupling loop label -->
+          <text x="200" y="416" text-anchor="middle" font-family="Inter, sans-serif"
+                font-size="10" fill="#00695C" font-weight="600">COUPLING LOOP</text>
+          <text x="200" y="430" text-anchor="middle" font-family="JetBrains Mono, monospace"
+                font-size="10" fill="#78909C">0.60 m (Faraday)</text>
+
+          <!-- Coax feed -->
+          <line x1="200" y1="400" x2="200" y2="460" stroke="#37474F" stroke-width="3"/>
+          <line x1="194" y1="400" x2="194" y2="460" stroke="#78909C" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="206" y1="400" x2="206" y2="460" stroke="#78909C" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="200" y="475" text-anchor="middle" font-family="Inter, sans-serif"
+                font-size="10" fill="#546E7A" font-weight="600">50 &Omega; COAX</text>
+
+          <!-- Diameter dimension -->
+          <line x1="50" y1="216" x2="50" y2="224" stroke="#004D40" stroke-width="1"/>
+          <line x1="350" y1="216" x2="350" y2="224" stroke="#004D40" stroke-width="1"/>
+          <line x1="50" y1="220" x2="140" y2="220" stroke="#004D40" stroke-width="1"
+                marker-end="url(#arrowR)"/>
+          <line x1="350" y1="220" x2="260" y2="220" stroke="#004D40" stroke-width="1"
+                marker-end="url(#arrowL)"/>
+          <defs>
+            <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0,0 8,3 0,6" fill="#004D40"/>
+            </marker>
+            <marker id="arrowL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+              <polygon points="8,0 0,3 8,6" fill="#004D40"/>
+            </marker>
+          </defs>
+          <rect x="158" y="208" width="84" height="22" rx="4" fill="white" fill-opacity="0.9"/>
+          <text x="200" y="224" text-anchor="middle" font-family="JetBrains Mono, monospace"
+                font-size="13" fill="#004D40" font-weight="700">D = 3.0 m</text>
+
+          <!-- Tube callout -->
+          <line x1="330" y1="150" x2="370" y2="120" stroke="#78909C" stroke-width="1"/>
+          <text x="372" y="116" font-family="Inter, sans-serif" font-size="10"
+                fill="#546E7A" font-weight="600">7/8" Cu Tube</text>
+          <text x="372" y="128" font-family="JetBrains Mono, monospace" font-size="9"
+                fill="#78909C">22.225 mm OD</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Right: Efficiency Comparison -->
+    <div class="card">
+      <h2>Efficiency &mdash; This Design vs Standard</h2>
+
+      <div class="eff-section">
+        <div class="eff-header">
+          <span class="eff-band">80 m Band (3.5 MHz)</span>
+          <span class="eff-pct">30.5%</span>
+        </div>
+        <div class="eff-bar-bg">
+          <div class="eff-bar-fill band80"></div>
+        </div>
+        <div class="eff-compare">
+          Standard 1 m / 3/8" loop: 0.7% &rarr; <span>+16.2 dB improvement</span>
+        </div>
+      </div>
+
+      <div style="height: 20px"></div>
+
+      <div class="eff-section">
+        <div class="eff-header">
+          <span class="eff-band">40 m Band (7.0 MHz)</span>
+          <span class="eff-pct">83.3%</span>
+        </div>
+        <div class="eff-bar-bg">
+          <div class="eff-bar-fill band40"></div>
+        </div>
+        <div class="eff-compare">
+          Standard 1 m / 3/8" loop: 7.6% &rarr; <span>+10.4 dB improvement</span>
+        </div>
+      </div>
+
+      <div style="height: 20px"></div>
+
+      <!-- Reference bars -->
+      <h2 style="margin-top: 8px">Standard Design (Reference)</h2>
+      <div class="eff-section">
+        <div class="eff-header">
+          <span class="eff-band" style="color:#E65100">80 m &mdash; 1 m / 3/8" tube</span>
+          <span class="eff-pct" style="color:#E65100">0.7%</span>
+        </div>
+        <div class="eff-bar-bg">
+          <div class="eff-bar-fill ref80"></div>
+        </div>
+      </div>
+      <div style="height: 10px"></div>
+      <div class="eff-section">
+        <div class="eff-header">
+          <span class="eff-band" style="color:#E65100">40 m &mdash; 1 m / 3/8" tube</span>
+          <span class="eff-pct" style="color:#E65100">7.6%</span>
+        </div>
+        <div class="eff-bar-bg">
+          <div class="eff-bar-fill ref40"></div>
+        </div>
+      </div>
+
+      <div style="height: 24px"></div>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <div class="improvement">80 m: +16.2 dB</div>
+        <div class="improvement">40 m: +10.4 dB</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ PERFORMANCE TABLE ═══════════ -->
+  <div class="grid">
+    <div class="card full-width">
+      <h2>Detailed Performance Table</h2>
+      <table class="perf-table">
+        <thead>
+          <tr>
+            <th>Band</th>
+            <th>Freq (MHz)</th>
+            <th>C_tune (pF)</th>
+            <th>Circ / &lambda;</th>
+            <th>Efficiency</th>
+            <th>Eff (dB)</th>
+            <th>&minus;3 dB BW</th>
+            <th>Q</th>
+            <th>V_cap @100W</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>80 m</td>
+            <td>3.500</td>
+            <td>220.0</td>
+            <td>0.110</td>
+            <td class="highlight-cell">30.5 %</td>
+            <td>&minus;5.16</td>
+            <td>1.61 kHz</td>
+            <td>2 176</td>
+            <td>6 712 V</td>
+          </tr>
+          <tr>
+            <td>80 m</td>
+            <td>3.650</td>
+            <td>202.3</td>
+            <td>0.115</td>
+            <td class="highlight-cell">33.7 %</td>
+            <td>&minus;4.72</td>
+            <td>1.76 kHz</td>
+            <td>2 068</td>
+            <td>6 762 V</td>
+          </tr>
+          <tr>
+            <td>80 m</td>
+            <td>3.800</td>
+            <td>186.6</td>
+            <td>0.119</td>
+            <td class="highlight-cell">36.9 %</td>
+            <td>&minus;4.33</td>
+            <td>1.94 kHz</td>
+            <td>1 963</td>
+            <td>6 799 V</td>
+          </tr>
+          <tr>
+            <td>40 m</td>
+            <td>7.000</td>
+            <td>55.0</td>
+            <td>0.220</td>
+            <td class="highlight-cell">83.3 %</td>
+            <td>&minus;0.79</td>
+            <td>9.42 kHz</td>
+            <td>743</td>
+            <td>5 544 V</td>
+          </tr>
+          <tr>
+            <td>40 m</td>
+            <td>7.100</td>
+            <td>53.5</td>
+            <td>0.223</td>
+            <td class="highlight-cell">83.9 %</td>
+            <td>&minus;0.76</td>
+            <td>9.73 kHz</td>
+            <td>730</td>
+            <td>5 483 V</td>
+          </tr>
+          <tr>
+            <td>40 m</td>
+            <td>7.200</td>
+            <td>52.0</td>
+            <td>0.226</td>
+            <td class="highlight-cell">84.6 %</td>
+            <td>&minus;0.72</td>
+            <td>10.39 kHz</td>
+            <td>693</td>
+            <td>5 427 V</td>
+          </tr>
+          <tr>
+            <td>40 m</td>
+            <td>7.300</td>
+            <td>50.6</td>
+            <td>0.230</td>
+            <td class="highlight-cell">85.2 %</td>
+            <td>&minus;0.70</td>
+            <td>10.78 kHz</td>
+            <td>677</td>
+            <td>5 375 V</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════ SPECS + FORMULAS ═══════════ -->
+  <div class="grid">
+    <div class="card">
+      <h2>Design Specifications</h2>
+      <div class="spec-row">
+        <span class="spec-label">Loop Diameter</span>
+        <span class="spec-value">3.000 m</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Loop Circumference</span>
+        <span class="spec-value">9.425 m</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Loop Area</span>
+        <span class="spec-value">7.069 m&sup2;</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Tube OD (Type L)</span>
+        <span class="spec-value">22.225 mm (7/8")</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Inductance</span>
+        <span class="spec-value">9.397 &micro;H</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Capacitor Range</span>
+        <span class="spec-value">50.6 &ndash; 220 pF</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Capacitor Type</span>
+        <span class="spec-value">Vacuum Var.</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Voltage Rating</span>
+        <span class="spec-value">&ge; 15 kV</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Coupling Loop</span>
+        <span class="spec-value">0.60 m Faraday</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Feed Impedance</span>
+        <span class="spec-value">50 &Omega;</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Estimated Weight</span>
+        <span class="spec-value">~12 kg (copper)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Est. Cost</span>
+        <span class="spec-value">$455 &ndash; $900</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Key Engineering Formulae</h2>
+      <div class="formula-box">
+        L = &mu;&#8320; &times; b &times; [ln(8b/a) &minus; 2]<br><br>
+        C = 1 / (&omega;&sup2; &times; L)<br><br>
+        R<sub>r</sub> = 31171 &times; (A / &lambda;&sup2;)&sup2;<br><br>
+        &delta; = 1 / &radic;(&pi; f &mu;&#8320; &sigma;)<br><br>
+        R<sub>loss</sub> = C<sub>loop</sub> / (&pi; d<sub>tube</sub> &sigma; &delta;)<br><br>
+        &eta; = R<sub>r</sub> / (R<sub>r</sub> + R<sub>loss</sub>)<br><br>
+        Q = &omega;L / (R<sub>r</sub> + R<sub>loss</sub>)<br><br>
+        V<sub>cap</sub> = &radic;(P / R<sub>total</sub>) &times; &omega;L
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ WARNING ═══════════ -->
+  <div class="grid">
+    <div class="card full-width">
+      <div class="warning">
+        <div class="warning-icon">&#9889;</div>
+        <div class="warning-text">
+          <strong>HIGH VOLTAGE WARNING:</strong> At 100 W, capacitor voltages exceed
+          <strong>6 700 V</strong> on 80 m and <strong>5 500 V</strong> on 40 m.
+          Mount the antenna out of reach (&ge; 2.5 m above ground). Use motor-driven
+          tuning only. Never touch the loop or capacitor during transmission. These
+          voltages are lethal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <div class="footer">
+    <strong>Magnetic Loop Antenna &mdash; 80 m &amp; 40 m Maximum Efficiency Design</strong><br>
+    Based on standard small-loop antenna theory (Kraus; ARRL Antenna Book).<br>
+    All values are theoretical &mdash; actual performance depends on construction quality and environment.<br><br>
+    <a href="https://github.com/Asteriskman2020/Magnetic-Loop-Antennas">github.com/Asteriskman2020/Magnetic-Loop-Antennas</a>
+  </div>
+
+</div>
+</body>
+</html>
